@@ -42,9 +42,15 @@ class SATWeb:
         inputValores = htmlFormulario.readAndGetInputValues()
         return inputValores
 
+    def __entrarAPantallaInicioSistema(self, valores):
+        url = 'https://portalcfdi.facturaelectronica.sat.gob.mx'
+        respuesta = self.sesion.post(url, data=valores)
+        html = respuesta.text
+        print(html)
 
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
         inputValores = self.__leerFormularioDeRespuesta()
-        self.__leerFormularioDeAccessControl(inputValores)
+        inputValores = self.__leerFormularioDeAccessControl(inputValores)
+        self.__entrarAPantallaInicioSistema(inputValores)
