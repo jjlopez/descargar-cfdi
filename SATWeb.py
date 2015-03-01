@@ -28,15 +28,19 @@ class SATWeb:
 
     def __leerFormularioDeRespuesta(self):
         url = 'https://portalcfdi.facturaelectronica.sat.gob.mx/'
-        r = self.sesion.get(url)
-        htmlSource = r.text
+        respond = self.sesion.get(url)
+        htmlSource = respond.text
         htmlForm = HTMLForm(htmlSource, 'form')
         inputValues = htmlForm.readAndGetInputValues()
         return inputValues
 
+    def __leerFormularioDeAccessControl(self, valores):
+        url = 'https://cfdicontribuyentes.accesscontrol.windows.net/v2/wsfederation'
+        respond = self.sesion.post(url, data=valores)
+        htmlSource = respond.text
 
 
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
-        self.__leerFormularioDeRespuesta()
+        inputValues = self.__leerFormularioDeRespuesta()
