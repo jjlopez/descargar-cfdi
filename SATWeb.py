@@ -1,5 +1,5 @@
 import requests
-import lxml.html
+from HTMLForm import HTMLForm
 
 class SATWeb:
     def __init__(self, rfc, contrasena):
@@ -29,7 +29,9 @@ class SATWeb:
     def __leerFormularioDeRespuesta(self):
         url = 'https://portalcfdi.facturaelectronica.sat.gob.mx/'
         r = self.sesion.get(url)
-        html = r.text
+        htmlSource = r.text
+        htmlForm = HTMLForm(htmlSource, 'form')
+        inputValues = htmlForm.readAndGetInputValues()
 
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
