@@ -5,7 +5,7 @@ class SATWeb:
     def __init__(self, rfc, contrasena):
         self.rfc = rfc
         self.contrasena = contrasena
-        self.sesion = s = requests.Session()
+        self.sesion = requests.Session()
 
     def __entrarAlaPaginaInicio(self):
         url = 'https://cfdiau.sat.gob.mx/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
@@ -32,6 +32,6 @@ class SATWeb:
         html = r.text
 
     def logueoDeUsuarioConCIEC(self):
+        self. __entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
         self.__leerFormularioDeRespuesta()
-
