@@ -32,6 +32,9 @@ class SATWeb:
         htmlSource = r.text
         htmlForm = HTMLForm(htmlSource, 'form')
         inputValues = htmlForm.readAndGetInputValues()
+        return inputValues
+
+
 
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
