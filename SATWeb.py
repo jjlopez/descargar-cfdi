@@ -11,7 +11,7 @@ class SATWeb:
         url = 'https://cfdiau.sat.gob.mx/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         self.sesion.post(url)
 
-    def logueoDeUsuarioConCIEC(self):
+    def __enviarFormularioConCIEC(self):
         url = 'https://cfdiau.sat.gob.mx/nidp/app/login?sid=0&sid=0'
         headers = {
             'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -24,11 +24,14 @@ class SATWeb:
             'Content-Type':'application/x-www-form-urlencoded',
         }
         values = {'option':'credential', 'Ecom_User_ID':self.rfc, 'Ecom_Password':self.contrasena, 'submit':'Enviar'}
-        r = self.sesion.post(url, data=values,headers=headers)
+        self.sesion.post(url, data=values,headers=headers)
 
+    def __leerFormularioDeRespuesta(self):
         url = 'https://portalcfdi.facturaelectronica.sat.gob.mx/'
         r = self.sesion.get(url)
         html = r.text
-        print(html)
 
+    def logueoDeUsuarioConCIEC(self):
+        self.__enviarFormularioConCIEC()
+        self.__leerFormularioDeRespuesta()
 
