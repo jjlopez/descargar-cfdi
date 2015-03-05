@@ -80,3 +80,9 @@ class SATWeb:
         inputValores = self.__leerFormularioDeAccessControl(inputValores)
         html = self.__entrarAPantallaInicioSistema(inputValores)
         self.__seleccionarTipo(html)
+
+    def consultaReceptor(self):
+        url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
+        respuesta = self.sesion.get(url)
+        html = respuesta.text
+        print(html)
