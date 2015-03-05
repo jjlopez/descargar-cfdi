@@ -46,11 +46,37 @@ class SATWeb:
         url = 'https://portalcfdi.facturaelectronica.sat.gob.mx'
         respuesta = self.sesion.post(url, data=valores)
         html = respuesta.text
-        print(html)
+        return html
+
+    def __seleccionarTipo(self, htmlFuente):
+        valores = {}
+        htmlFormulario = HTMLForm(htmlFuente, 'form')
+        inputValores = htmlFormulario.readAndGetInputValues()
+        inputValores['ctl00$MainContent$TipoBusqueda'] = 'RdoTipoBusquedaReceptor'
+        inputValores['__ASYNCPOST'] = 'true'
+        inputValores['__EVENTTARGET'] = ''
+        inputValores['__EVENTARGUMENT'] = ''
+        inputValores['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
+
+        encabezados = {
+            'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language':'en-US,en;q=0.5',
+            'Connection':'keep-alive',
+            'Host':'cfdiau.sat.gob.mx',
+            'Referer':'https://portalcfdi.facturaelectronica.sat.gob.mx',
+            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+            'Content-Type':'application/x-www-form-urlencoded',
+        }
+
+        url = 'https://portalcfdi.facturaelectronica.sat.gob.mx/Consulta.aspx'
+        respuesta = self.sesion.post(url, data=inputValores, headers=encabezados)
+        html = respuesta.text
 
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
         inputValores = self.__leerFormularioDeRespuesta()
         inputValores = self.__leerFormularioDeAccessControl(inputValores)
-        self.__entrarAPantallaInicioSistema(inputValores)
+        html = self.__entrarAPantallaInicioSistema(inputValores)
+        self.__seleccionarTipo(html)
