@@ -1,5 +1,6 @@
 import requests
 from HTMLForm import HTMLForm
+from DescargarXML import DescargarXML
 
 class SATWeb:
     def __init__(self, rfc, contrasena):
@@ -125,6 +126,8 @@ class SATWeb:
 
         respuesta = self.sesion.post(url, data=inputValores, headers=encabezados)
         htmlFuente = respuesta.text
+        xml=DescargarXML(htmlFuente, './')
+        xml.descargar()
         self.guardaTablaHTML(htmlFuente)
 
     def guardaTablaHTML(self, htmlFuente):
