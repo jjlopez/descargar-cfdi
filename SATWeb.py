@@ -1,6 +1,7 @@
 import requests
 from HTMLForm import HTMLForm
 from DescargarXML import DescargarXML
+from FiltrosRecibidos import FiltrosRecibidos
 
 class SATWeb:
     def __init__(self, rfc, contrasena):
@@ -82,34 +83,16 @@ class SATWeb:
         html = self.__entrarAPantallaInicioSistema(inputValores)
         self.__seleccionarTipo(html)
 
-    def consultaReceptor(self):
+    def consultaReceptor(self, filtros):
         url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
         respuesta = self.sesion.get(url)
         htmlFuente = respuesta.text
         htmlFormulario = HTMLForm(htmlFuente, 'form')
         inputValores = htmlFormulario.getFormValues()
-        inputValores['__ASYNCPOST'] = 'true'
-        inputValores['__EVENTARGUMENT'] = ''
-        inputValores['__EVENTTARGET'] = ''
-        inputValores['__LASTFOCUS'] = ''
-        inputValores['ctl00$MainContent$BtnBusqueda'] = 'Buscar CFDI'
-        inputValores['ctl00$MainContent$CldFecha$DdlAnio'] = '2015'
-        inputValores['ctl00$MainContent$CldFecha$DdlDia'] = '0'
-        inputValores['ctl00$MainContent$CldFecha$DdlHora'] = '0'
-        inputValores['ctl00$MainContent$CldFecha$DdlHoraFin'] = '23'
-        inputValores['ctl00$MainContent$CldFecha$DdlMes'] = '3'
-        inputValores['ctl00$MainContent$CldFecha$DdlMinuto'] = '0'
-        inputValores['ctl00$MainContent$CldFecha$DdlMinutoFin'] = '59'
-        inputValores['ctl00$MainContent$CldFecha$DdlSegundo'] = '0'
-        inputValores['ctl00$MainContent$CldFecha$DdlSegundoFin'] = '59'
-        inputValores['ctl00$MainContent$DdlEstadoComprobante'] = '-1'
-        inputValores['ctl00$MainContent$FiltroCentral'] = 'RdoFechas'
-        inputValores['ctl00$MainContent$TxtRfcReceptor'] = ''
-        inputValores['ctl00$MainContent$TxtUUID'] = ''
-        inputValores['ctl00$MainContent$ddlComplementos'] = '-1'
-        inputValores['ctl00$MainContent$hfInicialBool'] = 'false'
-        inputValores['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
         url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
+        post=inputValores.copy()
+        post.update(filtros.obtenerPOST())
+
         encabezados = {
             'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding':'gzip, deflate',
@@ -123,12 +106,19 @@ class SATWeb:
             'X-MicrosoftAjax':'Delta=true',
             'x-requested-with':'XMLHttpRequest'
         }
-
-        respuesta = self.sesion.post(url, data=inputValores, headers=encabezados)
+        print(repr(post))
+        respuesta = self.sesion.post(url, data=post, headers=encabezados)
         htmlFuente = respuesta.text
         xml=DescargarXML(self.sesion, htmlFuente, './xml/')
         xml.obtenerEnlacesYDescargar()
         self.guardaTablaHTML(htmlFuente)
+
+    def descargarPorAnnioMesYDia(self, annio, mes, dia):
+        filtros=FiltrosRecibidos()
+        filtros.annio=annio
+        filtros.mes=mes
+        filtros.dia=dia
+        self.consultaReceptor(filtros)
 
     def guardaTablaHTML(self, htmlFuente):
         file = open("cfdi.html", "w")
