@@ -127,7 +127,7 @@ class SATWeb:
         respuesta = self.sesion.post(url, data=inputValores, headers=encabezados)
         htmlFuente = respuesta.text
         xml=DescargarXML(htmlFuente, './')
-        xml.descargar()
+        xml.obtenerEnlacesYDescargar()
         self.guardaTablaHTML(htmlFuente)
 
     def guardaTablaHTML(self, htmlFuente):

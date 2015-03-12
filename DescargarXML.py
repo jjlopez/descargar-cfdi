@@ -6,8 +6,8 @@ class DescargarXML:
         self.htmlSource=htmlSource
         self.direccionDescarga=direccionDescarga
 
-    def descargar(self):
+    def obtenerEnlacesYDescargar(self):
         document=lxml.html.fromstring(self.htmlSource)
-        inputValues = {}
         for img in document.xpath('//img[@class="BtnDescarga"]'):
-            print(img.attrib['onclick'])
+            urlXML=img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
+            urlXML=urlXML.replace("','Recuperacion');", "")
