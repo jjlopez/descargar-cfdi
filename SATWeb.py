@@ -125,3 +125,9 @@ class SATWeb:
 
         respuesta = self.sesion.post(url, data=inputValores, headers=encabezados)
         htmlFuente = respuesta.text
+        self.guardaTablaHTML(htmlFuente)
+
+    def guardaTablaHTML(self, htmlFuente):
+        file = open("cfdi.html", "w")
+        file.write(htmlFuente)
+        file.close()
