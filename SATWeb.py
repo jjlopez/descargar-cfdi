@@ -106,7 +106,6 @@ class SATWeb:
             'X-MicrosoftAjax':'Delta=true',
             'x-requested-with':'XMLHttpRequest'
         }
-        print(repr(post))
         respuesta = self.sesion.post(url, data=post, headers=encabezados)
         htmlFuente = respuesta.text
         xml=DescargarXML(self.sesion, htmlFuente, './xml/')
@@ -119,6 +118,13 @@ class SATWeb:
         filtros.mes=mes
         filtros.dia=dia
         self.consultaReceptor(filtros)
+
+    def descargarPorAnnioYMes(self, annio, mes):
+        filtros=FiltrosRecibidos()
+        filtros.annio=annio
+        filtros.mes=mes
+        self.consultaReceptor(filtros)
+
 
     def guardaTablaHTML(self, htmlFuente):
         file = open("cfdi.html", "w")
