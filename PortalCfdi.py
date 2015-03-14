@@ -12,10 +12,8 @@ class PortalCfdi:
         self.sesion = requests.Session()
         self.directorioAGuardar=''
         self.header = Header()
-
         self.hostCfdiau = 'cfdiau.sat.gob.mx'
         self.hostPortalCfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
-
         self.urlCfdiau = 'https://' + self.hostCfdiau + '/'
         self.urlPortalCfdi = 'https://' + self.hostPortalCfdi + '/'
 
@@ -130,10 +128,8 @@ class PortalCfdi:
             self.hostPortalCfdi,
             self.urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
-
         respuesta=self.sesion.post(url, data=valoresPost, headers=encabezados)
         return respuesta.text
-
 
     def consultar(self, directorioAGuardar, filtros):
         htmlRespuesta=self.consultaReceptorFecha(filtros);
