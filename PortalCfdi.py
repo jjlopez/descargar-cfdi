@@ -16,6 +16,7 @@ class PortalCfdi:
         self.hostPortalCfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
         self.urlCfdiau = 'https://' + self.hostCfdiau + '/'
         self.urlPortalCfdi = 'https://' + self.hostPortalCfdi + '/'
+        self.urlCfdiCont='https://cfdicontribuyentes.accesscontrol.windows.net/'
 
     def __entrarAlaPaginaInicio(self):
         url = self.urlCfdiau + '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
@@ -48,7 +49,7 @@ class PortalCfdi:
         return self.__leerFormulario(htmlRespuesta)
 
     def __leerFormularioDeAccessControl(self, valoresPost):
-        url = 'https://cfdicontribuyentes.accesscontrol.windows.net/v2/wsfederation'
+        url = self.urlCfdiCont + 'v2/wsfederation'
         respuesta = self.sesion.post(url, data=valoresPost)
         htmlRespuesta = respuesta.text
         return self.__leerFormulario(htmlRespuesta)
