@@ -15,11 +15,11 @@ class DescargarXML:
             urlXML=img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
             urlXML=urlXML.replace("','Recuperacion');", "")
             nombre = str(i)+'.xml'
-            self.descargarXML(urlXML, nombre)
+            self.__descargarXML(urlXML, nombre)
             i+=1
             self.__ListaXML.append(nombre)
 
-    def descargarXML(self, urlXML, name):
+    def __descargarXML(self, urlXML, name):
         with open(self.direccionDescarga + name , 'wb') as handle:
             response = self.sesion.get(urlXML, stream=True)
             if not response.ok:
