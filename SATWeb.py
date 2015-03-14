@@ -9,6 +9,7 @@ class SATWeb:
         self.rfc = rfc
         self.contrasena = contrasena
         self.sesion = requests.Session()
+        self.directorioAGuardar=''
 
     def __entrarAlaPaginaInicio(self):
         url = 'https://cfdiau.sat.gob.mx/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
@@ -174,24 +175,24 @@ class SATWeb:
         htmlFuente = respuesta.text
         return htmlFuente
 
-    def __consultar(self, filtros):
+    def __consultar(self, directorioAGuardar, filtros):
         htmlFuente=self.consultaReceptorFecha(filtros);
         self.guardaTablaHTML(htmlFuente)
-        xml=DescargarXML(self.sesion, htmlFuente, './xml/')
+        xml=DescargarXML(self.sesion, htmlFuente, directorioAGuardar)
         xml.obtenerEnlacesYDescargar()
 
-    def descargarPorAnnioMesYDia(self, annio, mes, dia):
+    def descargarPorAnnioMesYDia(self, directorioAGuardar,  annio, mes, dia):
         filtros=FiltrosRecibidos()
         filtros.annio=annio
         filtros.mes=mes
         filtros.dia=dia
-        self.__consultar(filtros)
+        self.__consultar(directorioAGuardar, filtros)
 
-    def descargarPorAnnioYMes(self, annio, mes):
+    def descargarPorAnnioYMes(self, directorioAGuardar, annio, mes):
         filtros=FiltrosRecibidos()
         filtros.annio=annio
         filtros.mes=mes
-        self.__consultar(filtros)
+        self.__consultar(directorioAGuardar, filtros)
 
     def guardaTablaHTML(self, htmlFuente):
         file = open("cfdi.html", "w")
