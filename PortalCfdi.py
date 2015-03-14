@@ -28,14 +28,12 @@ class PortalCfdi:
             self.urlCfdiau +
             '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         )
-
         valoresPost = {
             'option':'credential',
             'Ecom_User_ID':self.rfc,
             'Ecom_Password':self.contrasena,
             'submit':'Enviar'
         }
-
         self.sesion.post(url, data=valoresPost, headers=encabezados)
 
     def __leerFormulario(self, html):
