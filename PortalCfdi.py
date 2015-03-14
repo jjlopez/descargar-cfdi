@@ -12,6 +12,7 @@ class PortalCfdi:
         self.directorioAGuardar=''
         self.header = Header()
         self.urlCfdiau = 'https://cfdiau.sat.gob.mx/'
+        self.urlPortalCfdi = 'https://portalcfdi.facturaelectronica.sat.gob.mx/'
 
     def __entrarAlaPaginaInicio(self):
         url = self.urlCfdiau + '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
@@ -28,10 +29,10 @@ class PortalCfdi:
         self.sesion.post(url, data=valores,headers=encabezados)
 
     def __leerFormularioDeRespuesta(self):
-        url = 'https://portalcfdi.facturaelectronica.sat.gob.mx/'
+        url = self.urlPortalCfdi
         respuesta = self.sesion.get(url)
-        htmlFuente = respuesta.text
-        htmlFormulario = HTMLForm(htmlFuente, 'form')
+        htmlRespuesta = respuesta.text
+        htmlFormulario = HTMLForm(htmlRespuesta, 'form')
         inputValores = htmlFormulario.getFormValues()
         return inputValores
 
