@@ -12,7 +12,7 @@ class ServicioCfdi:
         self.portalCfdi.consultar(directorioAGuardar, filtros)
 
 
-    def descargarPorAnnioMesYDia(self, directorioAGuardar,  annio, mes, dia):
+    def descargarPorAnnioMesYDia(self, directorioAGuardar, annio, mes, dia):
         filtros = FiltrosRecibidos()
         filtros.annio = annio
         filtros.mes = mes
