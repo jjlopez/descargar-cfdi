@@ -153,33 +153,6 @@ class PortalCfdi:
 
         return htmlFuente
 
-
-    def consultaReceptor(self, filtros):
-        url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
-        respuesta = self.sesion.get(url)
-        htmlFuente = respuesta.text
-        htmlFormulario = HTMLForm(htmlFuente, 'form')
-        inputValores = htmlFormulario.getFormValues()
-        url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
-        post=inputValores.copy()
-        post.update(filtros.obtenerPOST())
-        encabezados = {
-            'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Encoding':'gzip, deflate',
-            'Accept-Language':'en-US,en;q=0.5',
-            'Cache-Control':'no-cache',
-            'Connection':'keep-alive',
-            'Host':'portalcfdi.facturaelectronica.sat.gob.mx',
-            'Referer':'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx',
-            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
-            'Content-Type':'application/x-www-form-urlencoded; charset=utf-8',
-            'X-MicrosoftAjax':'Delta=true',
-            'x-requested-with':'XMLHttpRequest'
-        }
-        respuesta = self.sesion.post(url, data=post, headers=encabezados)
-        htmlFuente = respuesta.text
-        return htmlFuente
-
     def consultar(self, directorioAGuardar, filtros):
         htmlRespuesta=self.consultaReceptorFecha(filtros);
         xml=DescargarXML(self.sesion, htmlRespuesta, directorioAGuardar)
