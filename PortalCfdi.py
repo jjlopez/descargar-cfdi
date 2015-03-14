@@ -4,7 +4,7 @@ from DescargarXML import DescargarXML
 from FiltrosRecibidos import FiltrosRecibidos
 from ParserFormatSAT import ParserFormatSAT
 
-class SATWeb:
+class PortalCfdi:
     def __init__(self, rfc, contrasena):
         self.rfc = rfc
         self.contrasena = contrasena
