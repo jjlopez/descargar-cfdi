@@ -111,24 +111,29 @@ class PortalCfdi:
         respuesta = self.sesion.post(url, data=post, headers=encabezados)
         return respuesta.text, inputValores
 
-
-    def consultaReceptorFecha(self, filtros):
-        url = self.urlPortalCfdi + 'ConsultaReceptor.aspx'
-        htmlRespuesta, inputValores = self.__entrarConsultaReceptor(filtros)
-        parser = ParserFormatSAT(htmlRespuesta)
+    def __obtenerValoresPostBusquedaFechas(self, htmlFuente, inputValores, filtros):
+        parser = ParserFormatSAT(htmlFuente)
         valoresCambioEstado = parser.obtenerValoresFormulario()
         util = Utilerias()
         temporal = util.mergeListas(inputValores, filtros.obtenerPOST())
-        post = util.mergeListas(temporal, valoresCambioEstado)
+        return util.mergeListas(temporal, valoresCambioEstado)
+ 
+    def consultaReceptorFecha(self, filtros):
+        url = self.urlPortalCfdi + 'ConsultaReceptor.aspx'
+        htmlRespuesta, inputValores = self.__entrarConsultaReceptor(filtros)
+        valoresPost = self.__obtenerValoresPostBusquedaFechas(
+            htmlRespuesta,
+            inputValores,
+            filtros
+        )
         encabezados = self.header.obtenerAJAX(
             self.hostPortalCfdi,
             self.urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
 
-        respuesta=self.sesion.post(url, data=post, headers=encabezados)
-        htmlFuente=respuesta.text
+        respuesta=self.sesion.post(url, data=valoresPost, headers=encabezados)
+        return respuesta.text
 
-        return htmlFuente
 
     def consultar(self, directorioAGuardar, filtros):
         htmlRespuesta=self.consultaReceptorFecha(filtros);
