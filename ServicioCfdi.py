@@ -3,11 +3,11 @@ from FiltrosRecibidos import FiltrosRecibidos
 
 class ServicioCfdi:
     def __init__(self, rfc, contrasena):
-        self.rfc = rfc
-        self.contrasena = contrasena
+        self.__rfc = rfc
+        self.__contrasena = contrasena
 
     def __peticionPortalCfdi(self, directorioAGuardar, filtros):
-        self.portalCfdi = PortalCfdi(self.rfc, self.contrasena)
+        self.portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
         self.portalCfdi.consultar(directorioAGuardar, filtros)
 
 
