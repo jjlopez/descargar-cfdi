@@ -42,11 +42,11 @@ class PortalCfdi:
         inputValores = htmlFormulario.getFormValues()
         return inputValores
 
-    def __leerFormularioDeAccessControl(self, valores):
+    def __leerFormularioDeAccessControl(self, valoresPost):
         url = 'https://cfdicontribuyentes.accesscontrol.windows.net/v2/wsfederation'
-        respuesta = self.sesion.post(url, data=valores)
-        htmlFuente = respuesta.text
-        htmlFormulario = HTMLForm(htmlFuente, 'form')
+        respuesta = self.sesion.post(url, data=valoresPost)
+        htmlRespuesta = respuesta.text
+        htmlFormulario = HTMLForm(htmlRespuesta, 'form')
         inputValores = htmlFormulario.getFormValues()
         return inputValores
 
