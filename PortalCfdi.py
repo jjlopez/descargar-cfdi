@@ -1,7 +1,6 @@
 import requests
 from HTMLForm import HTMLForm
 from DescargarXML import DescargarXML
-from FiltrosRecibidos import FiltrosRecibidos
 from ParserFormatSAT import ParserFormatSAT
 
 class PortalCfdi:
@@ -175,24 +174,11 @@ class PortalCfdi:
         htmlFuente = respuesta.text
         return htmlFuente
 
-    def __consultar(self, directorioAGuardar, filtros):
+    def consultar(self, directorioAGuardar, filtros):
         htmlFuente=self.consultaReceptorFecha(filtros);
         self.guardaTablaHTML(htmlFuente)
         xml=DescargarXML(self.sesion, htmlFuente, directorioAGuardar)
         xml.obtenerEnlacesYDescargar()
-
-    def descargarPorAnnioMesYDia(self, directorioAGuardar,  annio, mes, dia):
-        filtros=FiltrosRecibidos()
-        filtros.annio=annio
-        filtros.mes=mes
-        filtros.dia=dia
-        self.__consultar(directorioAGuardar, filtros)
-
-    def descargarPorAnnioYMes(self, directorioAGuardar, annio, mes):
-        filtros=FiltrosRecibidos()
-        filtros.annio=annio
-        filtros.mes=mes
-        self.__consultar(directorioAGuardar, filtros)
 
     def guardaTablaHTML(self, htmlFuente):
         file = open("cfdi.html", "w")
