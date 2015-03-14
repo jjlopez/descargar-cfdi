@@ -2,6 +2,7 @@ import requests
 from HTMLForm import HTMLForm
 from DescargarXML import DescargarXML
 from FiltrosRecibidos import FiltrosRecibidos
+from ParserFormatSAT import ParserFormatSAT
 
 class SATWeb:
     def __init__(self, rfc, contrasena):
@@ -83,6 +84,70 @@ class SATWeb:
         html = self.__entrarAPantallaInicioSistema(inputValores)
         self.__seleccionarTipo(html)
 
+
+    def consultaReceptorFecha(self, filtros):
+        url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
+        encabezados = {
+            'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language':'en-US,en;q=0.5',
+            'Cache-Control':'no-cache',
+            'Connection':'keep-alive',
+            'Host':'portalcfdi.facturaelectronica.sat.gob.mx',
+            'Referer':'https://portalcfdi.facturaelectronica.sat.gob.mx/Consulta.aspx',
+            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+        }
+
+        respuesta = self.sesion.get(url)
+        htmlFuente = respuesta.text
+        htmlFormulario = HTMLForm(htmlFuente, 'form')
+
+        inputValores = htmlFormulario.getFormValues()
+        post=inputValores.copy()
+        post.update(filtros.obtenerPOSTFormularioFechas())
+        encabezados = {
+            'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language':'en-US,en;q=0.5',
+            'Cache-Control':'no-cache',
+            'Connection':'keep-alive',
+            'Host':'portalcfdi.facturaelectronica.sat.gob.mx',
+            'Referer':'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx',
+            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+            'Content-Type':'application/x-www-form-urlencoded; charset=utf-8',
+            'X-MicrosoftAjax':'Delta=true',
+            'x-requested-with':'XMLHttpRequest',
+            'Pragma':'no-cache'
+        }
+        respuesta=self.sesion.post(url, data=post, headers=encabezados)
+        htmlFuente=respuesta.text
+        parser=ParserFormatSAT(htmlFuente)
+        valoresCambioEstado=parser.obtenerValoresFormulario()
+
+
+        post=inputValores.copy()
+        post.update(filtros.obtenerPOST())
+        post.update(valoresCambioEstado)
+        encabezados = {
+            'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language':'en-US,en;q=0.5',
+            'Cache-Control':'no-cache',
+            'Connection':'keep-alive',
+            'Host':'portalcfdi.facturaelectronica.sat.gob.mx',
+            'Referer':'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx',
+            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+            'Content-Type':'application/x-www-form-urlencoded; charset=utf-8',
+            'X-MicrosoftAjax':'Delta=true',
+            'x-requested-with':'XMLHttpRequest',
+            'Pragma':'no-cache'
+        }
+        respuesta=self.sesion.post(url, data=post, headers=encabezados)
+        htmlFuente=respuesta.text
+
+        return htmlFuente
+
+
     def consultaReceptor(self, filtros):
         url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
         respuesta = self.sesion.get(url)
@@ -92,7 +157,6 @@ class SATWeb:
         url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
         post=inputValores.copy()
         post.update(filtros.obtenerPOST())
-
         encabezados = {
             'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding':'gzip, deflate',
@@ -108,23 +172,26 @@ class SATWeb:
         }
         respuesta = self.sesion.post(url, data=post, headers=encabezados)
         htmlFuente = respuesta.text
+        return htmlFuente
+
+    def __consultar(self, filtros):
+        htmlFuente=self.consultaReceptorFecha(filtros);
+        self.guardaTablaHTML(htmlFuente)
         xml=DescargarXML(self.sesion, htmlFuente, './xml/')
         xml.obtenerEnlacesYDescargar()
-        self.guardaTablaHTML(htmlFuente)
 
     def descargarPorAnnioMesYDia(self, annio, mes, dia):
         filtros=FiltrosRecibidos()
         filtros.annio=annio
         filtros.mes=mes
         filtros.dia=dia
-        self.consultaReceptor(filtros)
+        self.__consultar(filtros)
 
     def descargarPorAnnioYMes(self, annio, mes):
         filtros=FiltrosRecibidos()
         filtros.annio=annio
         filtros.mes=mes
-        self.consultaReceptor(filtros)
-
+        self.__consultar(filtros)
 
     def guardaTablaHTML(self, htmlFuente):
         file = open("cfdi.html", "w")
