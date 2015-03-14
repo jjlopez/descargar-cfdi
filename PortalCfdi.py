@@ -34,21 +34,22 @@ class PortalCfdi:
 
         self.sesion.post(url, data=valoresPost, headers=encabezados)
 
+    def __leerFormulario(self, html):
+        htmlFormulario = HTMLForm(html, 'form')
+        inputValores = htmlFormulario.getFormValues()
+        return inputValores
+
     def __leerFormularioDeRespuesta(self):
         url = self.urlPortalCfdi
         respuesta = self.sesion.get(url)
         htmlRespuesta = respuesta.text
-        htmlFormulario = HTMLForm(htmlRespuesta, 'form')
-        inputValores = htmlFormulario.getFormValues()
-        return inputValores
+        return self.__leerFormulario(htmlRespuesta)
 
     def __leerFormularioDeAccessControl(self, valoresPost):
         url = 'https://cfdicontribuyentes.accesscontrol.windows.net/v2/wsfederation'
         respuesta = self.sesion.post(url, data=valoresPost)
         htmlRespuesta = respuesta.text
-        htmlFormulario = HTMLForm(htmlRespuesta, 'form')
-        inputValores = htmlFormulario.getFormValues()
-        return inputValores
+        return self.__leerFormulario(htmlRespuesta)
 
     def __entrarAPantallaInicioSistema(self, valores):
         url = 'https://portalcfdi.facturaelectronica.sat.gob.mx'
