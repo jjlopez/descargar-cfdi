@@ -6,11 +6,16 @@ class ServicioCfdi:
         self.__rfc = rfc
         self.__contrasena = contrasena
         self.__resultado = False
+        self.__mensajeError = ''
 
     def __peticionPortalCfdi(self, directorioAGuardar, filtros):
-        self.portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
-        self.__resultado = self.portalCfdi.consultar(directorioAGuardar, filtros)
+        portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
+        self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
+        if not self.__resultado:
+            self.__mensajeError = portalCfdi.obtieneMensajeError()
 
+    def obtieneMensajeError(self):
+        return self.__mensajeError
 
     def descargarPorAnnioMesYDia(self, directorioAGuardar, annio, mes, dia):
         filtros = FiltrosRecibidos()
