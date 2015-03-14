@@ -98,8 +98,7 @@ class PortalCfdi:
         url = self.urlPortalCfdi + 'ConsultaReceptor.aspx'
         respuesta = self.sesion.get(url)
         htmlRespuesta = respuesta.text
-        htmlFormulario = HTMLForm(htmlRespuesta, 'form')
-        inputValores = htmlFormulario.getFormValues()
+        inputValores = self.__leerFormulario(htmlRespuesta)
         util = Utilerias()
         post = util.mergeListas(inputValores, filtros.obtenerPOSTFormularioFechas())
         encabezados = self.header.obtenerAJAX(
