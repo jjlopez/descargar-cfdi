@@ -1,3 +1,4 @@
+import sys
 import requests
 from HTMLForm import HTMLForm
 from DescargarXML import DescargarXML
@@ -17,6 +18,7 @@ class PortalCfdi:
         self.urlCfdiau = 'https://' + self.hostCfdiau + '/'
         self.urlPortalCfdi = 'https://' + self.hostPortalCfdi + '/'
         self.urlCfdiCont='https://cfdicontribuyentes.accesscontrol.windows.net/'
+        self.error = ''
 
     def __entrarAlaPaginaInicio(self):
         url = self.urlCfdiau + '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
@@ -125,8 +127,12 @@ class PortalCfdi:
         return respuesta.text
 
     def consultar(self, directorioAGuardar, filtros):
-        self.__logueoDeUsuarioConCIEC()
-        htmlRespuesta=self.__consultaReceptorFecha(filtros);
-        xml=DescargarXML(self.sesion, htmlRespuesta, directorioAGuardar)
-        xml.obtenerEnlacesYDescargar()
-        print("Se han terminando de descargar los archivos xml de forma exitosa")
+        try:
+            self.__logueoDeUsuarioConCIEC()
+            htmlRespuesta=self.__consultaReceptorFecha(filtros);
+            xml=DescargarXML(self.sesion, htmlRespuesta, directorioAGuardar)
+            xml.obtenerEnlacesYDescargar()
+            print("Se han terminando de descargar los archivos xml de forma exitosa")
+        except:
+            error = sys.exc_info()[0]
+            self.error = error
