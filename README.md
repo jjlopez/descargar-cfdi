@@ -14,18 +14,18 @@ descargarPorAnnioYMes(directorio, año, mes)
 directorio ya exista y termine con / .
 * año: Año a buscar.
 * mes: Mes a buscar
-    1. Enero
-    2. Febrero
-    3. Marzo
-    4. Abril
-    5. Mayo
-    6. Junio
-    7. Julio
-    8. Agosto
-    9. Septiembre
-    10. Octubre
-    11. Noviembre
-    12. Diciembre
+    * Enero
+    * Febrero
+    * Marzo
+    * Abril
+    * Mayo
+    * Junio
+    * Julio
+    * Agosto
+    * Septiembre
+    * Octubre
+    * Noviembre
+    * Diciembre
 
 #### Ejemplo de uso método descargarPorAnnioYMes
 
@@ -48,18 +48,18 @@ descargarPorAnnioMesYDia(directorio, año, mes, dia)
 directorio ya exista y termine con / .
 * año: Año a buscar
 * mes: Mes a buscar
-    1. Enero
-    2. Febrero
-    3. Marzo
-    4. Abril
-    5. Mayo
-    6. Junio
-    7. Julio
-    8. Agosto
-    9. Septiembre
-    10. Octubre
-    11. Noviembre
-    12. Diciembre
+    * Enero
+    * Febrero
+    * Marzo
+    * Abril
+    * Mayo
+    * Junio
+    * Julio
+    * Agosto
+    * Septiembre
+    * Octubre
+    * Noviembre
+    * Diciembre
 * dia: Dia a buscar.
 
 #### Ejemplo de uso método descargarPorAnnioMesYDia
