@@ -128,3 +128,4 @@ class PortalCfdi:
         htmlRespuesta=self.consultaReceptorFecha(filtros);
         xml=DescargarXML(self.sesion, htmlRespuesta, directorioAGuardar)
         xml.obtenerEnlacesYDescargar()
+        print("Se han terminando de descargar los archivos xml de forma exitosa")
