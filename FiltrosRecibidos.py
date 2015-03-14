@@ -1,3 +1,5 @@
+import datetime
+
 class FiltrosRecibidos:
 
     def __init__(self):
@@ -36,7 +38,7 @@ class FiltrosRecibidos:
         post['__EVENTARGUMENT'] = ''
         post['__EVENTTARGET']='ctl00$MainContent$RdoFechas'
         post['__LASTFOCUS'] = ''
-        post['ctl00$MainContent$CldFecha$DdlAnio'] = '2015'
+        post['ctl00$MainContent$CldFecha$DdlAnio'] = str(datetime.date.today().year)
         post['ctl00$MainContent$CldFecha$DdlDia'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHora'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHoraFin'] = '23'
