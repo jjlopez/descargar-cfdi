@@ -80,7 +80,7 @@ class PortalCfdi:
         respuesta = self.sesion.post(url, data=post, headers=encabezados)
         return respuesta.text
 
-    def logueoDeUsuarioConCIEC(self):
+    def __logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
         valoresPost = self.__leerFormularioDeRespuesta()
@@ -109,7 +109,7 @@ class PortalCfdi:
         temporal = util.mergeListas(inputValores, filtros.obtenerPOST())
         return util.mergeListas(temporal, valoresCambioEstado)
  
-    def consultaReceptorFecha(self, filtros):
+    def __consultaReceptorFecha(self, filtros):
         url = self.urlPortalCfdi + 'ConsultaReceptor.aspx'
         htmlRespuesta, inputValores = self.__entrarConsultaReceptor(filtros)
         valoresPost = self.__obtenerValoresPostBusquedaFechas(
@@ -125,7 +125,8 @@ class PortalCfdi:
         return respuesta.text
 
     def consultar(self, directorioAGuardar, filtros):
-        htmlRespuesta=self.consultaReceptorFecha(filtros);
+        self.__logueoDeUsuarioConCIEC()
+        htmlRespuesta=self.__consultaReceptorFecha(filtros);
         xml=DescargarXML(self.sesion, htmlRespuesta, directorioAGuardar)
         xml.obtenerEnlacesYDescargar()
         print("Se han terminando de descargar los archivos xml de forma exitosa")
