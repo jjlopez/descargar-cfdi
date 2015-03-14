@@ -5,10 +5,11 @@ class ServicioCfdi:
     def __init__(self, rfc, contrasena):
         self.__rfc = rfc
         self.__contrasena = contrasena
+        self.__resultado = False
 
     def __peticionPortalCfdi(self, directorioAGuardar, filtros):
         self.portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
-        self.portalCfdi.consultar(directorioAGuardar, filtros)
+        self.__resultado = self.portalCfdi.consultar(directorioAGuardar, filtros)
 
 
     def descargarPorAnnioMesYDia(self, directorioAGuardar, annio, mes, dia):
