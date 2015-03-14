@@ -7,6 +7,11 @@ class FiltrosRecibidos:
         self.mes=''
         self.dia=''
 
+    def __formateaDia(self):
+        if int(self.dia) < 10:
+            self.dia = '0' + self.dia
+        return self.dia
+
     def obtenerPOST(self):
         post={}
         post['__ASYNCPOST'] = 'true'
@@ -15,7 +20,7 @@ class FiltrosRecibidos:
         post['__LASTFOCUS'] = ''
         post['ctl00$MainContent$BtnBusqueda'] = 'Buscar CFDI'
         post['ctl00$MainContent$CldFecha$DdlAnio'] = self.annio
-        post['ctl00$MainContent$CldFecha$DdlDia'] = self.dia
+        post['ctl00$MainContent$CldFecha$DdlDia'] = self.__formateaDia()
         post['ctl00$MainContent$CldFecha$DdlHora'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHoraFin'] = '23'
         post['ctl00$MainContent$CldFecha$DdlMes'] = self.mes
