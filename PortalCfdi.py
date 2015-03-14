@@ -126,12 +126,17 @@ class PortalCfdi:
         respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
         return respuesta.text
 
+    def obtieneMensajeError(self):
+        return self.__error
+
     def consultar(self, directorioAGuardar, filtros):
         try:
             self.__logueoDeUsuarioConCIEC()
             htmlRespuesta=self.__consultaReceptorFecha(filtros);
             xml=DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
             xml.obtenerEnlacesYDescargar()
+            return True
         except:
             error = sys.exc_info()[0]
             self.__error = error
+            return False
