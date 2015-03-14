@@ -8,7 +8,6 @@ class ServicioCfdi:
 
     def __peticionPortalCfdi(self, directorioAGuardar, filtros):
         self.portalCfdi = PortalCfdi(self.rfc, self.contrasena)
-        self.portalCfdi.logueoDeUsuarioConCIEC()
         self.portalCfdi.consultar(directorioAGuardar, filtros)
 
 
