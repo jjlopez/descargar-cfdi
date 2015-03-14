@@ -185,8 +185,3 @@ class PortalCfdi:
         self.guardaTablaHTML(htmlFuente)
         xml=DescargarXML(self.sesion, htmlFuente, directorioAGuardar)
         xml.obtenerEnlacesYDescargar()
-
-    def guardaTablaHTML(self, htmlFuente):
-        file = open("cfdi.html", "w")
-        file.write(htmlFuente)
-        file.close()
