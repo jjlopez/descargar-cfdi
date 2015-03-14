@@ -181,7 +181,6 @@ class PortalCfdi:
         return htmlFuente
 
     def consultar(self, directorioAGuardar, filtros):
-        htmlFuente=self.consultaReceptorFecha(filtros);
-        self.guardaTablaHTML(htmlFuente)
-        xml=DescargarXML(self.sesion, htmlFuente, directorioAGuardar)
+        htmlRespuesta=self.consultaReceptorFecha(filtros);
+        xml=DescargarXML(self.sesion, htmlRespuesta, directorioAGuardar)
         xml.obtenerEnlacesYDescargar()
