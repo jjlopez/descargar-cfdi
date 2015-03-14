@@ -17,7 +17,7 @@ class DescargarXML:
             nombre = str(i)+'.xml'
             self.__descargarXML(urlXML, nombre)
             i+=1
-            self.__listaXML.append(self__direccionDescarga + nombre)
+            self.__listaXML.append(self.__direccionDescarga + nombre)
 
     def obtenerListaDeDocumentosDescargados(self):
         return self.__listaXML
