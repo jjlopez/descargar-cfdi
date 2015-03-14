@@ -13,6 +13,7 @@ class ServicioCfdi:
         self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
         if not self.__resultado:
             self.__mensajeError = portalCfdi.obtieneMensajeError()
+        return self.__resultado
 
     def obtieneMensajeError(self):
         return self.__mensajeError
@@ -22,10 +23,10 @@ class ServicioCfdi:
         filtros.annio = annio
         filtros.mes = mes
         filtros.dia = dia
-        self.__peticionPortalCfdi(directorioAGuardar, filtros)
+        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
 
     def descargarPorAnnioYMes(self, directorioAGuardar, annio, mes):
         filtros=FiltrosRecibidos()
         filtros.annio=annio
         filtros.mes=mes
-        self.__peticionPortalCfdi(directorioAGuardar, filtros)
+        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
