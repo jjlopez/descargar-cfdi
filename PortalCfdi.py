@@ -61,30 +61,25 @@ class PortalCfdi:
         htmlRespuesta = respuesta.text
         return htmlRespuesta
 
-    def __seleccionarTipo(self, htmlFuente):
-        valores = {}
-        htmlFormulario = HTMLForm(htmlFuente, 'form')
-        inputValores = htmlFormulario.getFormValues()
+    def __obtenerValoresPostDelTipoDeBusqueda(self, htmlFuente):
+        inputValores = self.__leerFormulario(htmlFuente)
         inputValores['ctl00$MainContent$TipoBusqueda'] = 'RdoTipoBusquedaReceptor'
         inputValores['__ASYNCPOST'] = 'true'
         inputValores['__EVENTTARGET'] = ''
         inputValores['__EVENTARGUMENT'] = ''
         inputValores['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
+        return inputValores
 
-        encabezados = {
-            'Accept':' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Encoding':'gzip, deflate',
-            'Accept-Language':'en-US,en;q=0.5',
-            'Connection':'keep-alive',
-            'Host':'cfdiau.sat.gob.mx',
-            'Referer':'https://portalcfdi.facturaelectronica.sat.gob.mx',
-            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
-            'Content-Type':'application/x-www-form-urlencoded',
-        }
 
-        url = 'https://portalcfdi.facturaelectronica.sat.gob.mx/Consulta.aspx'
-        respuesta = self.sesion.post(url, data=inputValores, headers=encabezados)
-        html = respuesta.text
+    def __seleccionarTipo(self, htmlFuente):
+        url = self.urlPortalCfdi + 'Consulta.aspx'
+        post = self.__obtenerValoresPostDelTipoDeBusqueda(htmlFuente)
+        encabezados = self.header.obtener(
+            self.hostCfdiau,
+            self.urlPortalCfdi
+        )
+        respuesta = self.sesion.post(url, data=post, headers=encabezados)
+        return respuesta.text
 
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
