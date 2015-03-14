@@ -6,6 +6,7 @@ class DescargarXML:
         self.sesion=sesion
         self.htmlSource=htmlSource
         self.direccionDescarga=direccionDescarga
+        self.__listaXML = []
 
     def obtenerEnlacesYDescargar(self):
         i=1
@@ -13,8 +14,10 @@ class DescargarXML:
         for img in document.xpath('//img[@class="BtnDescarga"]'):
             urlXML=img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
             urlXML=urlXML.replace("','Recuperacion');", "")
-            self.descargarXML(urlXML, str(i)+'.xml')
+            nombre = str(i)+'.xml'
+            self.descargarXML(urlXML, nombre)
             i+=1
+            self.__ListaXML.append(nombre)
 
     def descargarXML(self, urlXML, name):
         with open(self.direccionDescarga + name , 'wb') as handle:
