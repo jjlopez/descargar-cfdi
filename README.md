@@ -34,7 +34,7 @@ from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
 #Descargar al directorio /home/usuario/xml los xml del mes 03/2015
-servicio.descargarPorAnnioYMes('/home/usuario/xml/', '2015', '03')
+servicio.descargarPorAnnioYMes('/home/usuario/xml/', '2015', '3')
 ```
 ## descargarPorAnnioMesYDia
 Filtra por año, mes y dia para despues almacenar los xml encontrados en el directorio 
@@ -48,15 +48,15 @@ descargarPorAnnioMesYDia(directorio, año, mes, dia)
 directorio ya exista y termine con / .
 *año: Año a buscar
 *mes: Mes a buscar
-    *01=Enero
-    *02=Febrero
-    *03=Marzo
-    *04=Abril
-    *05=Mayo
-    *06=Junio
-    *07=Julio
-    *08=Agosto
-    *09=Septiembre
+    *1=Enero
+    *2=Febrero
+    *3=Marzo
+    *4=Abril
+    *5=Mayo
+    *6=Junio
+    *7=Julio
+    *8=Agosto
+    *9=Septiembre
     *10=Octubre
     *11=Noviembre
     *12=Diciembre
@@ -69,5 +69,5 @@ from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
 #Descargar al directorio /home/usuario/xml los xml de la fecha 14/03/2015
-servicio.descargarPorAnnioMesYDia('/home/usuario/xml/', '2015', '03', '14')
+servicio.descargarPorAnnioMesYDia('/home/usuario/xml/', '2015', '3', '14')
 ```
