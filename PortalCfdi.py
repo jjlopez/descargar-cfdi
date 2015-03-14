@@ -51,11 +51,11 @@ class PortalCfdi:
         htmlRespuesta = respuesta.text
         return self.__leerFormulario(htmlRespuesta)
 
-    def __entrarAPantallaInicioSistema(self, valores):
-        url = 'https://portalcfdi.facturaelectronica.sat.gob.mx'
-        respuesta = self.sesion.post(url, data=valores)
-        html = respuesta.text
-        return html
+    def __entrarAPantallaInicioSistema(self, valoresPost):
+        url = self.urlPortalCfdi
+        respuesta = self.sesion.post(url, data=valoresPost)
+        htmlRespuesta = respuesta.text
+        return htmlRespuesta
 
     def __seleccionarTipo(self, htmlFuente):
         valores = {}
