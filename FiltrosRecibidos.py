@@ -37,7 +37,7 @@ class FiltrosRecibidos:
         post['__EVENTTARGET']='ctl00$MainContent$RdoFechas'
         post['__LASTFOCUS'] = ''
         post['ctl00$MainContent$CldFecha$DdlAnio'] = '2015'
-        post['ctl00$MainContent$CldFecha$DdlDia'] = '01'
+        post['ctl00$MainContent$CldFecha$DdlDia'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHora'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHoraFin'] = '23'
         post['ctl00$MainContent$CldFecha$DdlMes'] = '1'
