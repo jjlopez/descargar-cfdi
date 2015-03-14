@@ -1,4 +1,4 @@
-import sys
+import traceback
 import requests
 from HTMLForm import HTMLForm
 from DescargarXML import DescargarXML
@@ -137,6 +137,6 @@ class PortalCfdi:
             xml.obtenerEnlacesYDescargar()
             return True
         except:
-            error = sys.exc_info()[0]
+            error = traceback.format_exc()
             self.__error = error
             return False
