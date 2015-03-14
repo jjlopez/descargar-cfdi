@@ -19,6 +19,7 @@ class PortalCfdi:
         self.__urlPortalCfdi = 'https://' + self.__hostPortalCfdi + '/'
         self.__urlCfdiCont='https://cfdicontribuyentes.accesscontrol.windows.net/'
         self.__error = ''
+        self.__listaDocumentos = []
 
     def __entrarAlaPaginaInicio(self):
         url = self.__urlCfdiau + '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
@@ -129,12 +130,16 @@ class PortalCfdi:
     def obtieneMensajeError(self):
         return self.__error
 
+    def obtieneListaDocumentosDescargados(self):
+        return self.__listaDocumentos
+
     def consultar(self, directorioAGuardar, filtros):
         try:
             self.__logueoDeUsuarioConCIEC()
             htmlRespuesta=self.__consultaReceptorFecha(filtros);
             xml=DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
             xml.obtenerEnlacesYDescargar()
+            self.__listaDocumentos = xml.obtenerListaDeDocumentosDescargados()
             return True
         except:
             error = traceback.format_exc()

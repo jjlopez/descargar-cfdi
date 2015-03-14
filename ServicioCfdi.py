@@ -7,13 +7,19 @@ class ServicioCfdi:
         self.__contrasena = contrasena
         self.__resultado = False
         self.__mensajeError = ''
+        self.__listaDocumentosDescargados = []
 
     def __peticionPortalCfdi(self, directorioAGuardar, filtros):
         portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
         self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
         if not self.__resultado:
             self.__mensajeError = portalCfdi.obtieneMensajeError()
+        else:
+            self.__listaDocumentosDescargados = portalCfdi.obtieneListaDocumentosDescargados()
         return self.__resultado
+
+    def obtieneListaDocumentosDescargados(self):
+        return self.__listaDocumentosDescargados
 
     def obtieneMensajeError(self):
         return self.__mensajeError
