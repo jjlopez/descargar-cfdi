@@ -85,11 +85,10 @@ class PortalCfdi:
     def logueoDeUsuarioConCIEC(self):
         self. __entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
-        inputValores = self.__leerFormularioDeRespuesta()
-        inputValores = self.__leerFormularioDeAccessControl(inputValores)
-        html = self.__entrarAPantallaInicioSistema(inputValores)
+        valoresPost = self.__leerFormularioDeRespuesta()
+        valoresPostAccessControl = self.__leerFormularioDeAccessControl(valoresPost)
+        html = self.__entrarAPantallaInicioSistema(valoresPostAccessControl)
         self.__seleccionarTipo(html)
-
 
     def consultaReceptorFecha(self, filtros):
         url= 'https://portalcfdi.facturaelectronica.sat.gob.mx/ConsultaReceptor.aspx'
