@@ -33,6 +33,7 @@ directorio ya exista y termine con / .
 from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
+#Descargar al directorio /home/usuario/xml los xml del mes 03/2015
 servicio.descargarPorAnnioYMes('/home/usuario/xml/', '2015', '03')
 ```
 ## descargarPorAnnioMesYDia
@@ -67,5 +68,6 @@ dia: Dia a buscar.
 from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
+#Descargar al directorio /home/usuario/xml los xml de la fecha 14/03/2015
 servicio.descargarPorAnnioMesYDia('/home/usuario/xml/', '2015', '03', '14')
 ```
