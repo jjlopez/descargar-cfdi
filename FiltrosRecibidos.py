@@ -3,9 +3,9 @@ import datetime
 class FiltrosRecibidos:
 
     def __init__(self):
-        self.annio=''
-        self.mes=''
-        self.dia=''
+        self.annio=str(datetime.date.today().year)
+        self.mes='1'
+        self.dia='0'
 
     def __formateaDia(self):
         if int(self.dia) < 10:
