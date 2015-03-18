@@ -41,3 +41,6 @@ class ServicioCfdi:
         filtros = FiltrosRecibidos()
         filtros.folioFiscal = folioFiscal
         return self.__peticionPortalCfdi(directorioAGuardar, filtros)
+
+    def descargarPorFiltros(self, directorioAGuardar, filtros):
+        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
