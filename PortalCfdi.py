@@ -127,6 +127,22 @@ class PortalCfdi:
         respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
         return respuesta.text
 
+    def __consultaReceptorFolio(self, filtros):
+        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        respuesta = self.__sesion.get(url)
+        htmlRespuesta = respuesta.text
+        inputValores = self.__leerFormulario(htmlRespuesta)
+        util = Utilerias()
+        valoresPost = util.mergeListas(inputValores, filtros.obtenerPOST())
+
+        encabezados = self.__header.obtenerAJAX(
+            self.__hostPortalCfdi,
+            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        )
+        respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        return respuesta.text
+
+
     def obtieneMensajeError(self):
         return self.__error
 
@@ -136,9 +152,15 @@ class PortalCfdi:
     def consultar(self, directorioAGuardar, filtros):
         try:
             self.__logueoDeUsuarioConCIEC()
-            htmlRespuesta=self.__consultaReceptorFecha(filtros);
+            if filtros.folioFiscal != '':
+                htmlRespuesta=self.__consultaReceptorFolio(filtros)
+                nombre = filtros.folioFiscal
+            else:
+                htmlRespuesta=self.__consultaReceptorFecha(filtros)
+                nombre = ''
+
             xml=DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
-            xml.obtenerEnlacesYDescargar()
+            xml.obtenerEnlacesYDescargar(nombre)
             self.__listaDocumentos = xml.obtenerListaDeDocumentosDescargados()
             return True
         except:

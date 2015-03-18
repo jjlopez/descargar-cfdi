@@ -3,9 +3,10 @@ import datetime
 class FiltrosRecibidos:
 
     def __init__(self):
-        self.annio=str(datetime.date.today().year)
-        self.mes='1'
-        self.dia='0'
+        self.annio = str(datetime.date.today().year)
+        self.mes = '1'
+        self.dia = '0'
+        self.folioFiscal = ''
 
     def __formateaDia(self):
         if int(self.dia) < 10:
@@ -29,13 +30,19 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$CldFecha$DdlSegundo'] = '0'
         post['ctl00$MainContent$CldFecha$DdlSegundoFin'] = '59'
         post['ctl00$MainContent$DdlEstadoComprobante'] = '-1'
-        post['ctl00$MainContent$FiltroCentral'] = 'RdoFechas'
+        post['ctl00$MainContent$FiltroCentral'] = self.__obtenFiltroCentral()
         post['ctl00$MainContent$TxtRfcReceptor'] = ''
-        post['ctl00$MainContent$TxtUUID'] = ''
+        post['ctl00$MainContent$TxtUUID'] = self.folioFiscal
         post['ctl00$MainContent$ddlComplementos'] = '-1'
         post['ctl00$MainContent$hfInicialBool'] = 'false'
         post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
         return post
+
+    def __obtenFiltroCentral(self):
+        if self.folioFiscal != '':
+            return 'RdoFolioFiscal'
+        else:
+            return 'RdoFechas'
 
     def obtenerPOSTFormularioFechas(self):
         post={}
