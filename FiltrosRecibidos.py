@@ -13,7 +13,7 @@ class FiltrosRecibidos:
         self.minutoFinal='59'
         self.segundoFinal='59'
         self.rfcEmisor=''
-        self.estado='1' #1.-Vigente,0.-Cancelado
+        self.__estado='1' #1.-Vigente,0.-Cancelado
         self.tipo = '-1'
         self.folioFiscal = ''
 
@@ -38,7 +38,7 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$CldFecha$DdlMinutoFin'] = self.minutoFinal
         post['ctl00$MainContent$CldFecha$DdlSegundo'] = self.segundoInicial
         post['ctl00$MainContent$CldFecha$DdlSegundoFin'] = self.segundoFinal
-        post['ctl00$MainContent$DdlEstadoComprobante'] = self.estado
+        post['ctl00$MainContent$DdlEstadoComprobante'] = self.__estado
         post['ctl00$MainContent$FiltroCentral'] = self.__obtenFiltroCentral()
         post['ctl00$MainContent$TxtRfcReceptor'] = self.rfcEmisor
         post['ctl00$MainContent$TxtUUID'] = self.folioFiscal
