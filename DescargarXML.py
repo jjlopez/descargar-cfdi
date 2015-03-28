@@ -14,7 +14,7 @@ class DescargarXML:
         i = 1
         document = lxml.html.fromstring(self.__htmlSource)
         for img in document.xpath('//img[@class="BtnDescarga"]'):
-            urlXML = img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
+            urlXML = img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/")
             urlXML = urlXML.replace("','Recuperacion');", "")
             if nombreDefault != '':
                 nombre = nombreDefault+'.xml'
