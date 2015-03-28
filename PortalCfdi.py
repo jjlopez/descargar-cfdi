@@ -170,9 +170,9 @@ class PortalCfdi:
     def consultar(self, directorioAGuardar, filtros):
         try:
             self.__logueo_usuario_ciec()
-            if filtros.folioFiscal != '':
+            if filtros.folio_fiscal != '':
                 htmlRespuesta = self.__consulta_receptor_folio(filtros)
-                nombre = filtros.folioFiscal
+                nombre = filtros.folio_fiscal
             else:
                 htmlRespuesta = self.__consulta_receptor_fecha(filtros)
                 nombre = ''
