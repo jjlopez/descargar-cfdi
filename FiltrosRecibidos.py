@@ -77,4 +77,3 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$hfInicialBool'] = 'true'
         post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$RdoFechas'
         return post
-
