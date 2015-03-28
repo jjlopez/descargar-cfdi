@@ -80,9 +80,9 @@ class PortalCfdi:
                                                 'BtnBusqueda')
         return input_valores
 
-    def __seleccionar_tipo(self, htmlFuente):
+    def __seleccionar_tipo(self, html_fuente):
         url = self.__url_portal_cfdi + 'Consulta.aspx'
-        post = self.__obtener_valores_post_tipo_busqueda(htmlFuente)
+        post = self.__obtener_valores_post_tipo_busqueda(html_fuente)
         encabezados = self.__header.obtener(
             self.__host_cfdiau,
             self.__url_portal_cfdi
