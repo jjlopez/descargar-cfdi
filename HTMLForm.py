@@ -25,4 +25,4 @@ class HTMLForm:
         inputValues = {}
         for input in document.xpath("//"+self.xpathForm+"/"+element):
             inputValues[input.name] = input.value
-        return inputValues;
+        return inputValues
