@@ -13,27 +13,27 @@ class PortalCfdi:
         self.__rfc = rfc
         self.__contrasena = contrasena
         self.__sesion = requests.Session()
-        self.__directorioAGuardar = ''
+        self.__directorio_guardar = ''
         self.__header = Header()
-        self.__hostCfdiau = 'cfdiau.sat.gob.mx'
-        self.__hostPortalCfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
-        self.__urlCfdiau = 'https://' + self.__hostCfdiau + '/'
-        self.__urlPortalCfdi = 'https://' + self.__hostPortalCfdi + '/'
-        self.__urlCfdiCont = ('https://cfdicontribuyentes.accesscontrol.'
+        self.__host_cfdiau = 'cfdiau.sat.gob.mx'
+        self.__host_portal_cfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
+        self.__url_cfdiau = 'https://' + self.__host_cfdiau + '/'
+        self.__url_portal_cfdi = 'https://' + self.__host_portal_cfdi + '/'
+        self.__url_cfdi_cont = ('https://cfdicontribuyentes.accesscontrol.'
                               'windows.net/')
         self.__error = ''
-        self.__listaDocumentos = []
+        self.__lista_documentos = []
 
     def __entrar_pagina_inicio(self):
-        url = self.__urlCfdiau + \
+        url = self.__url_cfdiau + \
                '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         self.__sesion.post(url)
 
     def __enviar_formulario_ciec(self):
-        url = self.__urlCfdiau + 'nidp/app/login?sid=0&sid=0'
+        url = self.__url_cfdiau + 'nidp/app/login?sid=0&sid=0'
         encabezados = self.__header.obtener(
-            self.__hostCfdiau,
-            self.__urlCfdiau +
+            self.__host_cfdiau,
+            self.__url_cfdiau +
             '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         )
         valoresPost = {
@@ -50,19 +50,19 @@ class PortalCfdi:
         return inputValores
 
     def __leer_formulario_respuesta(self):
-        url = self.__urlPortalCfdi
+        url = self.__url_portal_cfdi
         respuesta = self.__sesion.get(url)
         htmlRespuesta = respuesta.text
         return self.__leer_formulario(htmlRespuesta)
 
     def __leer_formulario_access_control(self, valoresPost):
-        url = self.__urlCfdiCont + 'v2/wsfederation'
+        url = self.__url_cfdi_cont + 'v2/wsfederation'
         respuesta = self.__sesion.post(url, data=valoresPost)
         htmlRespuesta = respuesta.text
         return self.__leer_formulario(htmlRespuesta)
 
     def __entrar_pantalla_inicio_sistema(self, valoresPost):
-        url = self.__urlPortalCfdi
+        url = self.__url_portal_cfdi
         respuesta = self.__sesion.post(url, data=valoresPost)
         htmlRespuesta = respuesta.text
         return htmlRespuesta
@@ -81,11 +81,11 @@ class PortalCfdi:
         return inputValores
 
     def __seleccionar_tipo(self, htmlFuente):
-        url = self.__urlPortalCfdi + 'Consulta.aspx'
+        url = self.__url_portal_cfdi + 'Consulta.aspx'
         post = self.__obtener_valores_post_tipo_busqueda(htmlFuente)
         encabezados = self.__header.obtener(
-            self.__hostCfdiau,
-            self.__urlPortalCfdi
+            self.__host_cfdiau,
+            self.__url_portal_cfdi
         )
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
         return respuesta.text
@@ -102,7 +102,7 @@ class PortalCfdi:
         self.__seleccionar_tipo(html)
 
     def __entrar_consulta_receptor(self, filtros):
-        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
         htmlRespuesta = respuesta.text
         inputValores = self.__leer_formulario(htmlRespuesta)
@@ -110,8 +110,8 @@ class PortalCfdi:
         post = util.\
             mezcla_listas(inputValores, filtros.obtener_post_formulario_fechas())
         encabezados = self.__header.obtener_ajax(
-            self.__hostPortalCfdi,
-            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+            self.__host_portal_cfdi,
+            self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
         return respuesta.text, inputValores
@@ -124,7 +124,7 @@ class PortalCfdi:
         return util.mezcla_listas(temporal, valoresCambioEstado)
 
     def __consulta_receptor_fecha(self, filtros):
-        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         htmlRespuesta, inputValores = self.__entrar_consulta_receptor(filtros)
         valoresPost = self.__obtener_valores_post_busqueda_fechas(
             htmlRespuesta,
@@ -132,8 +132,8 @@ class PortalCfdi:
             filtros
         )
         encabezados = self.__header.obtener_ajax(
-            self.__hostPortalCfdi,
-            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+            self.__host_portal_cfdi,
+            self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
         respuesta = self.__sesion.post(
             url,
@@ -143,7 +143,7 @@ class PortalCfdi:
         return respuesta.text
 
     def __consulta_receptor_folio(self, filtros):
-        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
         htmlRespuesta = respuesta.text
         inputValores = self.__leer_formulario(htmlRespuesta)
@@ -151,8 +151,8 @@ class PortalCfdi:
         valoresPost = util.mezcla_listas(inputValores, filtros.obtener_post())
 
         encabezados = self.__header.obtener_ajax(
-            self.__hostPortalCfdi,
-            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+            self.__host_portal_cfdi,
+            self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
         respuesta = self.__sesion.post(
             url,
@@ -165,9 +165,9 @@ class PortalCfdi:
         return self.__error
 
     def obtiene_lista_documentos_descargados(self):
-        return self.__listaDocumentos
+        return self.__lista_documentos
 
-    def consultar(self, directorioAGuardar, filtros):
+    def consultar(self, directorio_guardar, filtros):
         try:
             self.__logueo_usuario_ciec()
             if filtros.folio_fiscal != '':
@@ -180,10 +180,10 @@ class PortalCfdi:
             xml = DescargarXML(
                 self.__sesion,
                 htmlRespuesta,
-                directorioAGuardar
+                directorio_guardar
             )
             xml.obtener_enlaces_descargar(nombre)
-            self.__listaDocumentos = xml.obtener_lista_documentos_descargados()
+            self.__lista_documentos = xml.obtener_lista_documentos_descargados()
             return True
         except:
             error = traceback.format_exc()
