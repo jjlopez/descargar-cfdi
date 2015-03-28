@@ -18,7 +18,7 @@ class FiltrosRecibidos:
         self.tipo = '-1'
         self.folioFiscal = ''
 
-    def __formate_dia(self):
+    def __formatea_dia(self):
         if int(self.dia) < 10:
             self.dia = '0' + self.dia
         return self.dia
@@ -31,7 +31,7 @@ class FiltrosRecibidos:
         post['__LASTFOCUS'] = ''
         post['ctl00$MainContent$BtnBusqueda'] = 'Buscar CFDI'
         post['ctl00$MainContent$CldFecha$DdlAnio'] = self.annio
-        post['ctl00$MainContent$CldFecha$DdlDia'] = self.__formateaDia()
+        post['ctl00$MainContent$CldFecha$DdlDia'] = self.__formatea_dia()
         post['ctl00$MainContent$CldFecha$DdlHora'] = self.horaInicial
         post['ctl00$MainContent$CldFecha$DdlHoraFin'] = self.horaFinal
         post['ctl00$MainContent$CldFecha$DdlMes'] = self.mes
@@ -40,7 +40,7 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$CldFecha$DdlSegundo'] = self.segundoInicial
         post['ctl00$MainContent$CldFecha$DdlSegundoFin'] = self.segundoFinal
         post['ctl00$MainContent$DdlEstadoComprobante'] = self.__estado
-        post['ctl00$MainContent$FiltroCentral'] = self.__obtenFiltroCentral()
+        post['ctl00$MainContent$FiltroCentral'] = self.__obten_filtro_central()
         post['ctl00$MainContent$TxtRfcReceptor'] = self.rfcEmisor
         post['ctl00$MainContent$TxtUUID'] = self.folioFiscal
         post['ctl00$MainContent$ddlComplementos'] = self.tipo
