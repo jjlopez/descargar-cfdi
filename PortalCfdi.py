@@ -36,18 +36,18 @@ class PortalCfdi:
             self.__url_cfdiau +
             '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         )
-        valoresPost = {
+        valores_post = {
             'option': 'credential',
             'Ecom_User_ID': self.__rfc,
             'Ecom_Password': self.__contrasena,
             'submit': 'Enviar'
         }
-        self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        self.__sesion.post(url, data=valores_post, headers=encabezados)
 
     def __leer_formulario(self, html):
-        htmlFormulario = HTMLForm(html, 'form')
-        inputValores = htmlFormulario.get_form_values()
-        return inputValores
+        html_formulario = HTMLForm(html, 'form')
+        input_valores = html_formulario.get_form_values()
+        return input_valores
 
     def __leer_formulario_respuesta(self):
         url = self.__url_portal_cfdi
