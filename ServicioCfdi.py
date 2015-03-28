@@ -39,9 +39,9 @@ class ServicioCfdi:
         filtros.mes = mes
         return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
 
-    def descargarPorFolioFiscal(self, directorioAGuardar, folioFiscal):
+    def descargarPorFolioFiscal(self, directorioAGuardar, folio_fiscal):
         filtros = FiltrosRecibidos()
-        filtros.folioFiscal = folioFiscal
+        filtros.folio_fiscal = folio_fiscal
         return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
 
     def descargarPorFiltros(self, directorioAGuardar, filtros):
