@@ -4,4 +4,3 @@ class Utilerias:
         resultante = listaA.copy()
         resultante.update(listaB)
         return resultante
- 
