@@ -4,7 +4,12 @@ class ParserFormatSAT:
         self.fuente = fuente
         self.__valores = {}
         self.__items = {}
-        self.__validos = ['EVENTTARGET', '__EVENTARGUMENT', '__LASTFOCUS', '__VIEWSTATE']
+        self.__validos = [
+            'EVENTTARGET',
+            '__EVENTARGUMENT',
+            '__LASTFOCUS',
+            '__VIEWSTATE'
+        ]
 
     def __procesar(self):
         self.__valores = self.fuente.split('|')
