@@ -20,7 +20,7 @@ class Header:
         }
         return encabezado
 
-    def obtenerAJAX(self, host, referer):
+    def obtener_ajax(self, host, referer):
         encabezado = {
             'Accept': self.__accept,
             'Accept-Encoding': 'gzip, deflate',
