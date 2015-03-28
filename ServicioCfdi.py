@@ -16,8 +16,8 @@ class ServicioCfdi:
         if not self.__resultado:
             self.__mensajeError = portalCfdi.obtieneMensajeError()
         else:
-            self.__listaDocumentosDescargados =
-            portalCfdi.obtieneListaDocumentosDescargados()
+            self.__listaDocumentosDescargados = portalCfdi.\
+                obtieneListaDocumentosDescargados()
         return self.__resultado
 
     def obtieneListaDocumentosDescargados(self):
