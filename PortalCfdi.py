@@ -125,10 +125,10 @@ class PortalCfdi:
 
     def __consulta_receptor_fecha(self, filtros):
         url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
-        htmlRespuesta, inputValores = self.__entrar_consulta_receptor(filtros)
-        valoresPost = self.__obtener_valores_post_busqueda_fechas(
-            htmlRespuesta,
-            inputValores,
+        html_respuesta, input_valores = self.__entrar_consulta_receptor(filtros)
+        valores_post = self.__obtener_valores_post_busqueda_fechas(
+            html_respuesta,
+            input_valores,
             filtros
         )
         encabezados = self.__header.obtener_ajax(
@@ -137,7 +137,7 @@ class PortalCfdi:
         )
         respuesta = self.__sesion.post(
             url,
-            data=valoresPost,
+            data=valores_post,
             headers=encabezados
         )
         return respuesta.text
