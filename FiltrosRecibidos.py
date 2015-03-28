@@ -18,12 +18,12 @@ class FiltrosRecibidos:
         self.tipo = '-1'
         self.folioFiscal = ''
 
-    def __formateaDia(self):
+    def __formate_dia(self):
         if int(self.dia) < 10:
             self.dia = '0' + self.dia
         return self.dia
 
-    def obtenerPOST(self):
+    def obtener_post(self):
         post = {}
         post['__ASYNCPOST'] = 'true'
         post['__EVENTARGUMENT'] = ''
@@ -49,13 +49,13 @@ class FiltrosRecibidos:
                                        'ctl00$MainContent$BtnBusqueda'
         return post
 
-    def __obtenFiltroCentral(self):
+    def __obten_filtro_central(self):
         if self.folioFiscal != '':
             return 'RdoFolioFiscal'
         else:
             return 'RdoFechas'
 
-    def obtenerPOSTFormularioFechas(self):
+    def obtener_post_formulario_fechas(self):
         post = {}
         annio = datetime.date.today().year
         post['__ASYNCPOST'] = 'true'
