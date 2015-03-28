@@ -20,7 +20,7 @@ class PortalCfdi:
         self.__url_cfdiau = 'https://' + self.__host_cfdiau + '/'
         self.__url_portal_cfdi = 'https://' + self.__host_portal_cfdi + '/'
         self.__url_cfdi_cont = ('https://cfdicontribuyentes.accesscontrol.'
-                              'windows.net/')
+                                'windows.net/')
         self.__error = ''
         self.__lista_documentos = []
 
@@ -75,9 +75,9 @@ class PortalCfdi:
         input_valores['__EVENTTARGET'] = ''
         input_valores['__EVENTARGUMENT'] = ''
         input_valores['ctl00$ScriptManager1'] = ('ctl00$MainContent$'
-                                                'UpnlBusqueda|'
-                                                'ctl00$MainContent$'
-                                                'BtnBusqueda')
+                                                 'UpnlBusqueda|'
+                                                 'ctl00$MainContent$'
+                                                 'BtnBusqueda')
         return input_valores
 
     def __seleccionar_tipo(self, html_fuente):
