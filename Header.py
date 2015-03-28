@@ -2,10 +2,10 @@ class Header:
 
     def __init__(self):
         self.__user_agent = ('Mozilla/5.0 '
-                            '(Windows NT 6.1; WOW64; Trident/7.0; AS; '
-                            'rv:11.0) like Gecko')
+                             '(Windows NT 6.1; WOW64; Trident/7.0; AS; '
+                             'rv:11.0) like Gecko')
         self.__accept = ('text/html,application/xhtml+xml,application/xml;'
-                        'q=0.9,*/*;q=0.8')
+                         'q=0.9,*/*;q=0.8')
 
     def obtener(self, host, referer):
         encabezado = {
