@@ -104,17 +104,17 @@ class PortalCfdi:
     def __entrar_consulta_receptor(self, filtros):
         url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
-        htmlRespuesta = respuesta.text
-        inputValores = self.__leer_formulario(htmlRespuesta)
+        html_respuesta = respuesta.text
+        input_valores = self.__leer_formulario(html_respuesta)
         util = Utilerias()
         post = util.\
-            mezcla_listas(inputValores, filtros.obtener_post_formulario_fechas())
+            mezcla_listas(input_valores, filtros.obtener_post_formulario_fechas())
         encabezados = self.__header.obtener_ajax(
             self.__host_portal_cfdi,
             self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
-        return respuesta.text, inputValores
+        return respuesta.text, input_valores
 
     def __obtener_valores_post_busqueda_fechas(self, htmlFuente, inputValores, filtros):
         parser = ParserFormatSAT(htmlFuente)
