@@ -14,7 +14,7 @@ class FiltrosRecibidos:
         self.minutoFinal = '59'
         self.segundoFinal = '59'
         self.rfcEmisor = ''
-        self.__estado = '1' #1.-Vigente,0.-Cancelado
+        self.__estado = '1'  # 1.-Vigente,0.-Cancelado
         self.tipo = '-1'
         self.folioFiscal = ''
 
