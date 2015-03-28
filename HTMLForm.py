@@ -1,7 +1,7 @@
 import lxml.html
 
-class HTMLForm:
 
+class HTMLForm:
 
     def __init__(self, htmlSource, xpathForm):
         self.xpathForm = xpathForm
