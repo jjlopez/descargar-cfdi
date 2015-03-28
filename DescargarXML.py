@@ -5,23 +5,23 @@ import lxml.html
 class DescargarXML:
 
     def __init__(self, sesion, htmlSource, direccionDescarga):
-        self.__sesion=sesion
-        self.__htmlSource=htmlSource
-        self.__direccionDescarga=direccionDescarga
+        self.__sesion = sesion
+        self.__htmlSource = htmlSource
+        self.__direccionDescarga = direccionDescarga
         self.__listaXML = []
 
     def obtenerEnlacesYDescargar(self, nombreDefault=''):
-        i=1
-        document=lxml.html.fromstring(self.__htmlSource)
+        i = 1
+        document = lxml.html.fromstring(self.__htmlSource)
         for img in document.xpath('//img[@class="BtnDescarga"]'):
-            urlXML=img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
-            urlXML=urlXML.replace("','Recuperacion');", "")
-            if nombreDefault !='' :
+            urlXML = img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
+            urlXML = urlXML.replace("','Recuperacion');", "")
+            if nombreDefault != '' :
                 nombre = nombreDefault+'.xml'
             else:
-                nombre = str(i)+'.xml'
+                nombre = str(i) + '.xml'
             self.__descargarXML(urlXML, nombre)
-            i+=1
+            i += 1
             self.__listaXML.append(self.__direccionDescarga + nombre)
 
     def obtenerListaDeDocumentosDescargados(self):
