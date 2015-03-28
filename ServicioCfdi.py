@@ -10,39 +10,39 @@ class ServicioCfdi:
         self.__mensaje_error = ''
         self.__lista_documentos_descargados = []
 
-    def __peticion_portal_cfdi(self, directorioAGuardar, filtros):
-        portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
-        self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
+    def __peticion_portal_cfdi(self, directorio_guardar, filtros):
+        portal_cfdi = PortalCfdi(self.__rfc, self.__contrasena)
+        self.__resultado = portal_cfdi.consultar(directorio_guardar, filtros)
         if not self.__resultado:
-            self.__mensaje_error = portalCfdi.obtiene_mensaje_error()
+            self.__mensaje_error = portal_cfdi.error()
         else:
-            self.__lista_documentos_descargados = portalCfdi.\
-                obtiene_lista_documentos_descargados()
+            self.__lista_documentos_descargados = portal_cfdi.\
+                lista_cfdis()
         return self.__resultado
 
-    def obtieneListaDocumentosDescargados(self):
+    def lista_cfdis(self):
         return self.__lista_documentos_descargados
 
-    def obtieneMensajeError(self):
+    def error(self):
         return self.__mensaje_error
 
-    def descargarPorAnnioMesYDia(self, directorioAGuardar, annio, mes, dia):
+    def descargar_fecha(self, directorio_guardar, annio, mes, dia):
         filtros = FiltrosRecibidos()
         filtros.annio = annio
         filtros.mes = mes
         filtros.dia = dia
-        return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
 
-    def descargarPorAnnioYMes(self, directorioAGuardar, annio, mes):
+    def descargar_anniomes(self, directorio_guardar, annio, mes):
         filtros = FiltrosRecibidos()
         filtros.annio = annio
         filtros.mes = mes
-        return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
 
-    def descargarPorFolioFiscal(self, directorioAGuardar, folio_fiscal):
+    def descargar_folio(self, directorio_guardar, folio_fiscal):
         filtros = FiltrosRecibidos()
         filtros.folio_fiscal = folio_fiscal
-        return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
 
-    def descargarPorFiltros(self, directorioAGuardar, filtros):
-        return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
+    def descargar(self, directorio_guardar, filtros):
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
