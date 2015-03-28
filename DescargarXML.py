@@ -1,7 +1,9 @@
 import requests
 import lxml.html
 
+
 class DescargarXML:
+
     def __init__(self, sesion, htmlSource, direccionDescarga):
         self.__sesion=sesion
         self.__htmlSource=htmlSource
