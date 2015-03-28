@@ -33,10 +33,10 @@ class PortalCfdi:
             '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         )
         valoresPost = {
-            'option':'credential',
-            'Ecom_User_ID':self.__rfc,
-            'Ecom_Password':self.__contrasena,
-            'submit':'Enviar'
+            'option': 'credential',
+            'Ecom_User_ID': self.__rfc,
+            'Ecom_Password': self.__contrasena,
+            'submit': 'Enviar'
         }
         self.__sesion.post(url, data=valoresPost, headers=encabezados)
 
