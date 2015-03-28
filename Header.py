@@ -1,5 +1,10 @@
 class Header:
 
+    def __init__(self):
+        self.__user_agent = ('Mozilla/5.0 '
+                            '(Windows NT 6.1; WOW64; Trident/7.0; AS; '
+                            'rv:11.0) like Gecko')
+
     def obtener(self, host, referer):
         encabezado = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -8,7 +13,7 @@ class Header:
             'Connection': 'keep-alive',
             'Host': host,
             'Referer': referer,
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+            'User-Agent': self.__user_agent,
             'Content-Type': 'application/x-www-form-urlencoded',
         }
         return encabezado
@@ -22,7 +27,7 @@ class Header:
             'Connection': 'keep-alive',
             'Host': host,
             'Referer': referer,
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+            'User-Agent': self.__user_agent,
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-MicrosoftAjax': 'Delta=true',
             'x-requested-with': 'XMLHttpRequest',
