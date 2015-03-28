@@ -10,7 +10,7 @@ class DescargarXML:
         self.__direccionDescarga = direccionDescarga
         self.__listaXML = []
 
-    def obtenerEnlacesYDescargar(self, nombreDefault=''):
+    def obtener_enlaces_descargar(self, nombreDefault=''):
         i = 1
         document = lxml.html.fromstring(self.__htmlSource)
         for img in document.xpath('//img[@class="BtnDescarga"]'):
@@ -23,14 +23,14 @@ class DescargarXML:
                 nombre = nombreDefault+'.xml'
             else:
                 nombre = str(i) + '.xml'
-            self.__descargarXML(urlXML, nombre)
+            self.__descargar_xml(urlXML, nombre)
             i += 1
             self.__listaXML.append(self.__direccionDescarga + nombre)
 
-    def obtenerListaDeDocumentosDescargados(self):
+    def obtener_lista_documentos_descargados(self):
         return self.__listaXML
 
-    def __descargarXML(self, urlXML, name):
+    def __descargar_xml(self, urlXML, name):
         with open(self.__direccionDescarga + name, 'wb') as handle:
             response = self.__sesion.get(urlXML, stream=True)
             if not response.ok:
