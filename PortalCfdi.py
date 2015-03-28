@@ -6,7 +6,9 @@ from ParserFormatSAT import ParserFormatSAT
 from Header import Header
 from Utilerias import Utilerias
 
+
 class PortalCfdi:
+
     def __init__(self, rfc, contrasena):
         self.__rfc = rfc
         self.__contrasena = contrasena
@@ -72,7 +74,6 @@ class PortalCfdi:
         inputValores['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
         return inputValores
 
-
     def __seleccionarTipo(self, htmlFuente):
         url = self.__urlPortalCfdi + 'Consulta.aspx'
         post = self.__obtenerValoresPostDelTipoDeBusqueda(htmlFuente)
@@ -111,7 +112,7 @@ class PortalCfdi:
         util = Utilerias()
         temporal = util.mezcla_listas(inputValores, filtros.obtenerPOST())
         return util.mezcla_listas(temporal, valoresCambioEstado)
- 
+
     def __consultaReceptorFecha(self, filtros):
         url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         htmlRespuesta, inputValores = self.__entrarConsultaReceptor(filtros)
@@ -141,7 +142,6 @@ class PortalCfdi:
         )
         respuesta = self.__sesion.post(url, data=valoresPost, headers=encabezados)
         return respuesta.text
-
 
     def obtieneMensajeError(self):
         return self.__error
