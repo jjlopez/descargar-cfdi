@@ -45,7 +45,8 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$TxtUUID'] = self.folioFiscal
         post['ctl00$MainContent$ddlComplementos'] = self.tipo
         post['ctl00$MainContent$hfInicialBool'] = 'false'
-        post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
+        post['ctl00$ScriptManager1'] =
+        'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
         return post
 
     def __obtenFiltroCentral(self):
@@ -56,11 +57,12 @@ class FiltrosRecibidos:
 
     def obtenerPOSTFormularioFechas(self):
         post = {}
+        annio = datetime.date.today().year
         post['__ASYNCPOST'] = 'true'
         post['__EVENTARGUMENT'] = ''
         post['__EVENTTARGET'] = 'ctl00$MainContent$RdoFechas'
         post['__LASTFOCUS'] = ''
-        post['ctl00$MainContent$CldFecha$DdlAnio'] = str(datetime.date.today().year)
+        post['ctl00$MainContent$CldFecha$DdlAnio'] = str(annio)
         post['ctl00$MainContent$CldFecha$DdlDia'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHora'] = '0'
         post['ctl00$MainContent$CldFecha$DdlHoraFin'] = '23'
@@ -75,5 +77,6 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$TxtUUID'] = ''
         post['ctl00$MainContent$ddlComplementos'] = '-1'
         post['ctl00$MainContent$hfInicialBool'] = 'true'
-        post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$RdoFechas'
+        post['ctl00$ScriptManager1'] =
+        'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$RdoFechas'
         return post
