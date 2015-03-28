@@ -171,15 +171,15 @@ class PortalCfdi:
         try:
             self.__logueo_usuario_ciec()
             if filtros.folio_fiscal != '':
-                htmlRespuesta = self.__consulta_receptor_folio(filtros)
+                html_respuesta = self.__consulta_receptor_folio(filtros)
                 nombre = filtros.folio_fiscal
             else:
-                htmlRespuesta = self.__consulta_receptor_fecha(filtros)
+                html_respuesta = self.__consulta_receptor_fecha(filtros)
                 nombre = ''
 
             xml = DescargarXML(
                 self.__sesion,
-                htmlRespuesta,
+                html_respuesta,
                 directorio_guardar
             )
             xml.obtener_enlaces_descargar(nombre)
