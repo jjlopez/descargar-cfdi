@@ -1,6 +1,7 @@
 from PortalCfdi import PortalCfdi
 from FiltrosRecibidos import FiltrosRecibidos
 
+
 class ServicioCfdi:
     def __init__(self, rfc, contrasena):
         self.__rfc = rfc
