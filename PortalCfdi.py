@@ -101,14 +101,17 @@ class PortalCfdi:
         html = self.__entrar_pantalla_inicio_sistema(valores_post_access_ctrl)
         self.__seleccionar_tipo(html)
 
-    def __entrar_consulta_receptor(self, filtros):
+    def __entra_consulta_receptor(self, filtros):
         url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
         html_respuesta = respuesta.text
         input_valores = self.__leer_formulario(html_respuesta)
         util = Utilerias()
         post = util.\
-            mezcla_listas(input_valores, filtros.obtener_post_formulario_fechas())
+            mezcla_listas(
+                input_valores,
+                filtros.obtener_post_formulario_fechas()
+            )
         encabezados = self.__header.obtener_ajax(
             self.__host_portal_cfdi,
             self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
@@ -116,16 +119,16 @@ class PortalCfdi:
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
         return respuesta.text, input_valores
 
-    def __obtener_valores_post_busqueda_fechas(self, html_fuente, input_valores, filtros):
-        parser = ParserFormatSAT(html_fuente)
+    def __obtener_valores_post_busqueda_fechas(self, html, inputs, filtros):
+        parser = ParserFormatSAT(html)
         valores_cambio_estado = parser.obtener_valores_formulario()
         util = Utilerias()
-        temporal = util.mezcla_listas(input_valores, filtros.obtener_post())
+        temporal = util.mezcla_listas(inputs, filtros.obtener_post())
         return util.mezcla_listas(temporal, valores_cambio_estado)
 
     def __consulta_receptor_fecha(self, filtros):
         url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
-        html_respuesta, input_valores = self.__entrar_consulta_receptor(filtros)
+        html_respuesta, input_valores = self.__entra_consulta_receptor(filtros)
         valores_post = self.__obtener_valores_post_busqueda_fechas(
             html_respuesta,
             input_valores,
@@ -142,13 +145,13 @@ class PortalCfdi:
         )
         return respuesta.text
 
-    def __consulta_receptor_folio(self, filtros):
+    def __consulta_receptor_folio(self, fltrs):
         url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
         html_respuesta = respuesta.text
         input_valores = self.__leer_formulario(html_respuesta)
         util = Utilerias()
-        valores_post = util.mezcla_listas(input_valores, filtros.obtener_post())
+        valores_post = util.mezcla_listas(input_valores, fltrs.obtener_post())
 
         encabezados = self.__header.obtener_ajax(
             self.__host_portal_cfdi,
@@ -183,7 +186,7 @@ class PortalCfdi:
                 directorio_guardar
             )
             xml.obtener_enlaces_descargar(nombre)
-            self.__lista_documentos = xml.obtener_lista_documentos_descargados()
+            self.__lista_documentos = xml.get_lista_documentos_descargados()
             return True
         except:
             error = traceback.format_exc()
