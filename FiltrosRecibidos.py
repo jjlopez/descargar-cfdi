@@ -50,7 +50,7 @@ class FiltrosRecibidos:
         return post
 
     def __obten_filtro_central(self):
-        if self.folioFiscal != '':
+        if self.folio_fiscal != '':
             return 'RdoFolioFiscal'
         else:
             return 'RdoFechas'
