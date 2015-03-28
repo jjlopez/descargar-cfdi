@@ -8,17 +8,17 @@ class HTMLForm:
         self.htmlSource = htmlSource
 
     def get_form_values(self):
-        inputValues = self.readInputValues()
-        selectValues = self.readSelectValues()
+        inputValues = self.read_input_values()
+        selectValues = self.read_select_values()
         values = inputValues.copy()
         values.update(selectValues)
         return values
 
     def read_input_values(self):
-        return self.readAndGetValues("input")
+        return self.read_and_get_values("input")
 
-    def read_select_vValues(self):
-        return self.readAndGetValues("select")
+    def read_select_values(self):
+        return self.read_and_get_values("select")
 
     def read_and_get_values(self, element):
         document = lxml.html.fromstring(self.htmlSource)

@@ -42,7 +42,7 @@ class PortalCfdi:
 
     def __leerFormulario(self, html):
         htmlFormulario = HTMLForm(html, 'form')
-        inputValores = htmlFormulario.getFormValues()
+        inputValores = htmlFormulario.get_form_values()
         return inputValores
 
     def __leerFormularioDeRespuesta(self):
