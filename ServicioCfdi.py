@@ -7,24 +7,24 @@ class ServicioCfdi:
         self.__rfc = rfc
         self.__contrasena = contrasena
         self.__resultado = False
-        self.__mensajeError = ''
-        self.__listaDocumentosDescargados = []
+        self.__mensaje_error = ''
+        self.__lista_documentos_descargados = []
 
     def __peticion_portal_cfdi(self, directorioAGuardar, filtros):
         portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
         self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
         if not self.__resultado:
-            self.__mensajeError = portalCfdi.obtieneMensajeError()
+            self.__mensaje_error = portalCfdi.obtieneMensajeError()
         else:
-            self.__listaDocumentosDescargados = portalCfdi.\
+            self.__lista_documentos_descargados = portalCfdi.\
                 obtieneListaDocumentosDescargados()
         return self.__resultado
 
     def obtieneListaDocumentosDescargados(self):
-        return self.__listaDocumentosDescargados
+        return self.__lista_documentos_descargados
 
     def obtieneMensajeError(self):
-        return self.__mensajeError
+        return self.__mensaje_error
 
     def descargarPorAnnioMesYDia(self, directorioAGuardar, annio, mes, dia):
         filtros = FiltrosRecibidos()
@@ -45,4 +45,4 @@ class ServicioCfdi:
         return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
 
     def descargarPorFiltros(self, directorioAGuardar, filtros):
-        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
+        return self.__peticion_portal_cfdi(directorioAGuardar, filtros)
