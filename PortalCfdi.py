@@ -67,18 +67,18 @@ class PortalCfdi:
         html_respuesta = respuesta.text
         return html_respuesta
 
-    def __obtener_valores_post_tipo_busqueda(self, htmlFuente):
+    def __obtener_valores_post_tipo_busqueda(self, html_fuente):
         tipo_busqueda = 'RdoTipoBusquedaReceptor'
-        inputValores = self.__leer_formulario(htmlFuente)
-        inputValores['ctl00$MainContent$TipoBusqueda'] = tipo_busqueda
-        inputValores['__ASYNCPOST'] = 'true'
-        inputValores['__EVENTTARGET'] = ''
-        inputValores['__EVENTARGUMENT'] = ''
-        inputValores['ctl00$ScriptManager1'] = ('ctl00$MainContent$'
+        input_valores = self.__leer_formulario(html_fuente)
+        input_valores['ctl00$MainContent$TipoBusqueda'] = tipo_busqueda
+        input_valores['__ASYNCPOST'] = 'true'
+        input_valores['__EVENTTARGET'] = ''
+        input_valores['__EVENTARGUMENT'] = ''
+        input_valores['ctl00$ScriptManager1'] = ('ctl00$MainContent$'
                                                 'UpnlBusqueda|'
                                                 'ctl00$MainContent$'
                                                 'BtnBusqueda')
-        return inputValores
+        return input_valores
 
     def __seleccionar_tipo(self, htmlFuente):
         url = self.__url_portal_cfdi + 'Consulta.aspx'
