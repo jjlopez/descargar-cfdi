@@ -7,14 +7,14 @@ class FiltrosRecibidos:
         self.annio = str(datetime.date.today().year)
         self.mes = '1'
         self.dia = '0'
-        self.horaInicial='0'
-        self.minutoInicial='0'
-        self.segundoInicial='0'
-        self.horaFinal='23'
-        self.minutoFinal='59'
-        self.segundoFinal='59'
-        self.rfcEmisor=''
-        self.__estado='1' #1.-Vigente,0.-Cancelado
+        self.horaInicial = '0'
+        self.minutoInicial = '0'
+        self.segundoInicial = '0'
+        self.horaFinal = '23'
+        self.minutoFinal = '59'
+        self.segundoFinal = '59'
+        self.rfcEmisor = ''
+        self.__estado = '1' #1.-Vigente,0.-Cancelado
         self.tipo = '-1'
         self.folioFiscal = ''
 
@@ -24,7 +24,7 @@ class FiltrosRecibidos:
         return self.dia
 
     def obtenerPOST(self):
-        post={}
+        post = {}
         post['__ASYNCPOST'] = 'true'
         post['__EVENTARGUMENT'] = ''
         post['__EVENTTARGET'] = ''
@@ -55,10 +55,10 @@ class FiltrosRecibidos:
             return 'RdoFechas'
 
     def obtenerPOSTFormularioFechas(self):
-        post={}
+        post = {}
         post['__ASYNCPOST'] = 'true'
         post['__EVENTARGUMENT'] = ''
-        post['__EVENTTARGET']='ctl00$MainContent$RdoFechas'
+        post['__EVENTTARGET'] = 'ctl00$MainContent$RdoFechas'
         post['__LASTFOCUS'] = ''
         post['ctl00$MainContent$CldFecha$DdlAnio'] = str(datetime.date.today().year)
         post['ctl00$MainContent$CldFecha$DdlDia'] = '0'
@@ -74,7 +74,7 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$TxtRfcReceptor'] = ''
         post['ctl00$MainContent$TxtUUID'] = ''
         post['ctl00$MainContent$ddlComplementos'] = '-1'
-        post['ctl00$MainContent$hfInicialBool']='true'
+        post['ctl00$MainContent$hfInicialBool'] = 'true'
         post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$RdoFechas'
         return post
 
