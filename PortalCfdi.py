@@ -93,12 +93,12 @@ class PortalCfdi:
     def __logueo_usuario_ciec(self):
         self.__entrar_pagina_inicio()
         self.__enviar_formulario_ciec()
-        valoresPost = self.__leer_formulario_respuesta()
+        valores_post = self.__leer_formulario_respuesta()
 
-        valoresPostAccessControl = self.\
-            __leer_formulario_access_control(valoresPost)
+        valores_post_access_ctrl = self.\
+            __leer_formulario_access_control(valores_post)
 
-        html = self.__entrar_pantalla_inicio_sistema(valoresPostAccessControl)
+        html = self.__entrar_pantalla_inicio_sistema(valores_post_access_ctrl)
         self.__seleccionar_tipo(html)
 
     def __entrar_consulta_receptor(self, filtros):
