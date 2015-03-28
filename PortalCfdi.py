@@ -98,7 +98,7 @@ class PortalCfdi:
         inputValores = self.__leerFormulario(htmlRespuesta)
         util = Utilerias()
         post = util.mergeListas(inputValores, filtros.obtenerPOSTFormularioFechas())
-        encabezados = self.__header.obtenerAJAX(
+        encabezados = self.__header.obtener_ajax(
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
@@ -120,7 +120,7 @@ class PortalCfdi:
             inputValores,
             filtros
         )
-        encabezados = self.__header.obtenerAJAX(
+        encabezados = self.__header.obtener_ajax(
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
@@ -135,7 +135,7 @@ class PortalCfdi:
         util = Utilerias()
         valoresPost = util.mergeListas(inputValores, filtros.obtenerPOST())
 
-        encabezados = self.__header.obtenerAJAX(
+        encabezados = self.__header.obtener_ajax(
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
