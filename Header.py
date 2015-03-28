@@ -4,10 +4,12 @@ class Header:
         self.__user_agent = ('Mozilla/5.0 '
                             '(Windows NT 6.1; WOW64; Trident/7.0; AS; '
                             'rv:11.0) like Gecko')
+        self.__accept = ('text/html,application/xhtml+xml,application/xml;'
+                        'q=0.9,*/*;q=0.8')
 
     def obtener(self, host, referer):
         encabezado = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept': self.__accept,
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US,en;q=0.5',
             'Connection': 'keep-alive',
@@ -20,7 +22,7 @@ class Header:
 
     def obtenerAJAX(self, host, referer):
         encabezado = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept': self.__accept,
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US,en;q=0.5',
             'Cache-Control': 'no-cache',
