@@ -116,12 +116,12 @@ class PortalCfdi:
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
         return respuesta.text, input_valores
 
-    def __obtener_valores_post_busqueda_fechas(self, htmlFuente, inputValores, filtros):
-        parser = ParserFormatSAT(htmlFuente)
-        valoresCambioEstado = parser.obtener_valores_formulario()
+    def __obtener_valores_post_busqueda_fechas(self, html_fuente, input_valores, filtros):
+        parser = ParserFormatSAT(html_fuente)
+        valores_cambio_estado = parser.obtener_valores_formulario()
         util = Utilerias()
-        temporal = util.mezcla_listas(inputValores, filtros.obtener_post())
-        return util.mezcla_listas(temporal, valoresCambioEstado)
+        temporal = util.mezcla_listas(input_valores, filtros.obtener_post())
+        return util.mezcla_listas(temporal, valores_cambio_estado)
 
     def __consulta_receptor_fecha(self, filtros):
         url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
