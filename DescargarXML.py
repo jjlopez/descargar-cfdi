@@ -16,7 +16,7 @@ class DescargarXML:
         for img in document.xpath('//img[@class="BtnDescarga"]'):
             urlXML = img.attrib['onclick'].replace("return AccionCfdi('", "https://portalcfdi.facturaelectronica.sat.gob.mx/");
             urlXML = urlXML.replace("','Recuperacion');", "")
-            if nombreDefault != '' :
+            if nombreDefault != '':
                 nombre = nombreDefault+'.xml'
             else:
                 nombre = str(i) + '.xml'
@@ -28,7 +28,7 @@ class DescargarXML:
         return self.__listaXML
 
     def __descargarXML(self, urlXML, name):
-        with open(self.__direccionDescarga + name , 'wb') as handle:
+        with open(self.__direccionDescarga + name, 'wb') as handle:
             response = self.__sesion.get(urlXML, stream=True)
             if not response.ok:
                 pass
