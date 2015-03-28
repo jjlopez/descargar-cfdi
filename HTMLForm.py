@@ -10,7 +10,7 @@ class HTMLForm:
     def getFormValues(self):
         inputValues = self.readInputValues()
         selectValues = self.readSelectValues()
-        values=inputValues.copy()
+        values = inputValues.copy()
         values.update(selectValues)
         return values
 
@@ -21,7 +21,7 @@ class HTMLForm:
         return self.readAndGetValues("select")
 
     def readAndGetValues(self, element):
-        document=lxml.html.fromstring(self.htmlSource)
+        document = lxml.html.fromstring(self.htmlSource)
         inputValues = {}
         for input in document.xpath("//"+self.xpathForm+"/"+element):
             inputValues[input.name] = input.value
