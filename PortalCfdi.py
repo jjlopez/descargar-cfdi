@@ -107,7 +107,7 @@ class PortalCfdi:
 
     def __obtenerValoresPostBusquedaFechas(self, htmlFuente, inputValores, filtros):
         parser = ParserFormatSAT(htmlFuente)
-        valoresCambioEstado = parser.obtenerValoresFormulario()
+        valoresCambioEstado = parser.obtener_valores_formulario()
         util = Utilerias()
         temporal = util.mezcla_listas(inputValores, filtros.obtenerPOST())
         return util.mezcla_listas(temporal, valoresCambioEstado)
