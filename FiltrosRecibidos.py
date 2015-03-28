@@ -45,8 +45,8 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$TxtUUID'] = self.folioFiscal
         post['ctl00$MainContent$ddlComplementos'] = self.tipo
         post['ctl00$MainContent$hfInicialBool'] = 'false'
-        post['ctl00$ScriptManager1'] =
-        'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
+        post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|'\
+                                       'ctl00$MainContent$BtnBusqueda'
         return post
 
     def __obtenFiltroCentral(self):
@@ -77,6 +77,6 @@ class FiltrosRecibidos:
         post['ctl00$MainContent$TxtUUID'] = ''
         post['ctl00$MainContent$ddlComplementos'] = '-1'
         post['ctl00$MainContent$hfInicialBool'] = 'true'
-        post['ctl00$ScriptManager1'] =
-        'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$RdoFechas'
+        post['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|'\
+                                       'ctl00$MainContent$RdoFechas'
         return post
