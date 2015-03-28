@@ -32,9 +32,9 @@ class ServicioCfdi:
         return self.__peticionPortalCfdi(directorioAGuardar, filtros)
 
     def descargarPorAnnioYMes(self, directorioAGuardar, annio, mes):
-        filtros=FiltrosRecibidos()
-        filtros.annio=annio
-        filtros.mes=mes
+        filtros = FiltrosRecibidos()
+        filtros.annio = annio
+        filtros.mes = mes
         return self.__peticionPortalCfdi(directorioAGuardar, filtros)
 
     def descargarPorFolioFiscal(self, directorioAGuardar, folioFiscal):
