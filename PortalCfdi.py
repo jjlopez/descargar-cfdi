@@ -11,13 +11,13 @@ class PortalCfdi:
         self.__rfc = rfc
         self.__contrasena = contrasena
         self.__sesion = requests.Session()
-        self.__directorioAGuardar=''
+        self.__directorioAGuardar = ''
         self.__header = Header()
         self.__hostCfdiau = 'cfdiau.sat.gob.mx'
         self.__hostPortalCfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
         self.__urlCfdiau = 'https://' + self.__hostCfdiau + '/'
         self.__urlPortalCfdi = 'https://' + self.__hostPortalCfdi + '/'
-        self.__urlCfdiCont='https://cfdicontribuyentes.accesscontrol.windows.net/'
+        self.__urlCfdiCont = 'https://cfdicontribuyentes.accesscontrol.windows.net/'
         self.__error = ''
         self.__listaDocumentos = []
 
@@ -124,7 +124,7 @@ class PortalCfdi:
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
-        respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        respuesta = self.__sesion.post(url, data=valoresPost, headers=encabezados)
         return respuesta.text
 
     def __consultaReceptorFolio(self, filtros):
@@ -139,7 +139,7 @@ class PortalCfdi:
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
-        respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        respuesta = self.__sesion.post(url, data=valoresPost, headers=encabezados)
         return respuesta.text
 
 
@@ -153,13 +153,13 @@ class PortalCfdi:
         try:
             self.__logueoDeUsuarioConCIEC()
             if filtros.folioFiscal != '':
-                htmlRespuesta=self.__consultaReceptorFolio(filtros)
+                htmlRespuesta = self.__consultaReceptorFolio(filtros)
                 nombre = filtros.folioFiscal
             else:
-                htmlRespuesta=self.__consultaReceptorFecha(filtros)
+                htmlRespuesta = self.__consultaReceptorFecha(filtros)
                 nombre = ''
 
-            xml=DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
+            xml = DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
             xml.obtenerEnlacesYDescargar(nombre)
             self.__listaDocumentos = xml.obtenerListaDeDocumentosDescargados()
             return True
