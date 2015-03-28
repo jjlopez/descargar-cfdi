@@ -19,12 +19,14 @@ class PortalCfdi:
         self.__hostPortalCfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
         self.__urlCfdiau = 'https://' + self.__hostCfdiau + '/'
         self.__urlPortalCfdi = 'https://' + self.__hostPortalCfdi + '/'
-        self.__urlCfdiCont = 'https://cfdicontribuyentes.accesscontrol.windows.net/'
+        self.__urlCfdiCont = ('https://cfdicontribuyentes.accesscontrol.'
+                              'windows.net/')
         self.__error = ''
         self.__listaDocumentos = []
 
     def __entrarAlaPaginaInicio(self):
-        url = self.__urlCfdiau + '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
+        url = self.__urlCfdiau + \
+               '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         self.__sesion.post(url)
 
     def __enviarFormularioConCIEC(self):
@@ -66,12 +68,16 @@ class PortalCfdi:
         return htmlRespuesta
 
     def __obtenerValoresPostDelTipoDeBusqueda(self, htmlFuente):
+        tipo_busqueda = 'RdoTipoBusquedaReceptor'
         inputValores = self.__leerFormulario(htmlFuente)
-        inputValores['ctl00$MainContent$TipoBusqueda'] = 'RdoTipoBusquedaReceptor'
+        inputValores['ctl00$MainContent$TipoBusqueda'] = tipo_busqueda
         inputValores['__ASYNCPOST'] = 'true'
         inputValores['__EVENTTARGET'] = ''
         inputValores['__EVENTARGUMENT'] = ''
-        inputValores['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
+        inputValores['ctl00$ScriptManager1'] = ('ctl00$MainContent$'
+                                                'UpnlBusqueda|'
+                                                'ctl00$MainContent$'
+                                                'BtnBusqueda')
         return inputValores
 
     def __seleccionarTipo(self, htmlFuente):
@@ -88,7 +94,10 @@ class PortalCfdi:
         self.__entrarAlaPaginaInicio()
         self.__enviarFormularioConCIEC()
         valoresPost = self.__leerFormularioDeRespuesta()
-        valoresPostAccessControl = self.__leerFormularioDeAccessControl(valoresPost)
+
+        valoresPostAccessControl = self.\
+            __leerFormularioDeAccessControl(valoresPost)
+
         html = self.__entrarAPantallaInicioSistema(valoresPostAccessControl)
         self.__seleccionarTipo(html)
 
@@ -98,7 +107,8 @@ class PortalCfdi:
         htmlRespuesta = respuesta.text
         inputValores = self.__leerFormulario(htmlRespuesta)
         util = Utilerias()
-        post = util.mezcla_listas(inputValores, filtros.obtenerPOSTFormularioFechas())
+        post = util.\
+            mezcla_listas(inputValores, filtros.obtenerPOSTFormularioFechas())
         encabezados = self.__header.obtener_ajax(
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
@@ -125,7 +135,11 @@ class PortalCfdi:
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
-        respuesta = self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        respuesta = self.__sesion.post(
+            url,
+            data=valoresPost,
+            headers=encabezados
+        )
         return respuesta.text
 
     def __consultaReceptorFolio(self, filtros):
@@ -140,7 +154,11 @@ class PortalCfdi:
             self.__hostPortalCfdi,
             self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
         )
-        respuesta = self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        respuesta = self.__sesion.post(
+            url,
+            data=valoresPost,
+            headers=encabezados
+        )
         return respuesta.text
 
     def obtieneMensajeError(self):
@@ -159,7 +177,11 @@ class PortalCfdi:
                 htmlRespuesta = self.__consultaReceptorFecha(filtros)
                 nombre = ''
 
-            xml = DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
+            xml = DescargarXML(
+                self.__sesion,
+                htmlRespuesta,
+                directorioAGuardar
+            )
             xml.obtenerEnlacesYDescargar(nombre)
             self.__listaDocumentos = xml.obtenerListaDeDocumentosDescargados()
             return True
