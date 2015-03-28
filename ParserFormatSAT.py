@@ -14,7 +14,7 @@ class ParserFormatSAT:
     def __procesar(self):
         self.__valores = self.fuente.split('|')
 
-    def __ordenaValores(self):
+    def __ordena_valores(self):
         name = ''
         self.__ordenados = {}
         for index in range(len(self.__valores)):
@@ -26,7 +26,7 @@ class ParserFormatSAT:
                 self.__items[name] = item
                 name = ''
 
-    def obtenerValoresFormulario(self):
+    def obtener_valores_formulario(self):
         self.__procesar()
-        self.__ordenaValores()
+        self.__ordena_valores()
         return self.__items
