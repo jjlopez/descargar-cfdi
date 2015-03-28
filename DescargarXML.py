@@ -27,7 +27,7 @@ class DescargarXML:
             i += 1
             self.__lista_xml.append(self.__direccion_descarga + nombre)
 
-    def obtener_lista_documentos_descargados(self):
+    def get_lista_documentos_descargados(self):
         return self.__lista_xml
 
     def __descargar_xml(self, url_xml, nombre):
