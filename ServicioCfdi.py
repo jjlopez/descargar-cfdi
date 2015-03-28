@@ -14,10 +14,10 @@ class ServicioCfdi:
         portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
         self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
         if not self.__resultado:
-            self.__mensaje_error = portalCfdi.obtieneMensajeError()
+            self.__mensaje_error = portalCfdi.obtiene_mensaje_error()
         else:
             self.__lista_documentos_descargados = portalCfdi.\
-                obtieneListaDocumentosDescargados()
+                obtiene_lista_documentos_descargados()
         return self.__resultado
 
     def obtieneListaDocumentosDescargados(self):
