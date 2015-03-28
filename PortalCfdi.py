@@ -61,11 +61,11 @@ class PortalCfdi:
         html_respuesta = respuesta.text
         return self.__leer_formulario(html_respuesta)
 
-    def __entrar_pantalla_inicio_sistema(self, valoresPost):
+    def __entrar_pantalla_inicio_sistema(self, valores_post):
         url = self.__url_portal_cfdi
-        respuesta = self.__sesion.post(url, data=valoresPost)
-        htmlRespuesta = respuesta.text
-        return htmlRespuesta
+        respuesta = self.__sesion.post(url, data=valores_post)
+        html_respuesta = respuesta.text
+        return html_respuesta
 
     def __obtener_valores_post_tipo_busqueda(self, htmlFuente):
         tipo_busqueda = 'RdoTipoBusquedaReceptor'
