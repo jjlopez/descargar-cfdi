@@ -55,11 +55,11 @@ class PortalCfdi:
         html_respuesta = respuesta.text
         return self.__leer_formulario(html_respuesta)
 
-    def __leer_formulario_access_control(self, valoresPost):
+    def __leer_formulario_access_control(self, valores_post):
         url = self.__url_cfdi_cont + 'v2/wsfederation'
-        respuesta = self.__sesion.post(url, data=valoresPost)
-        htmlRespuesta = respuesta.text
-        return self.__leer_formulario(htmlRespuesta)
+        respuesta = self.__sesion.post(url, data=valores_post)
+        html_respuesta = respuesta.text
+        return self.__leer_formulario(html_respuesta)
 
     def __entrar_pantalla_inicio_sistema(self, valoresPost):
         url = self.__url_portal_cfdi
