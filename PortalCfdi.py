@@ -164,10 +164,10 @@ class PortalCfdi:
         )
         return respuesta.text
 
-    def obtiene_mensaje_error(self):
+    def error(self):
         return self.__error
 
-    def obtiene_lista_documentos_descargados(self):
+    def lista_cfdis(self):
         return self.__lista_documentos
 
     def consultar(self, directorio_guardar, filtros):
