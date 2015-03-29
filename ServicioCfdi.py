@@ -1,46 +1,48 @@
 from PortalCfdi import PortalCfdi
 from FiltrosRecibidos import FiltrosRecibidos
 
+
 class ServicioCfdi:
     def __init__(self, rfc, contrasena):
         self.__rfc = rfc
         self.__contrasena = contrasena
         self.__resultado = False
-        self.__mensajeError = ''
-        self.__listaDocumentosDescargados = []
+        self.__mensaje_error = ''
+        self.__lista_documentos_descargados = []
 
-    def __peticionPortalCfdi(self, directorioAGuardar, filtros):
-        portalCfdi = PortalCfdi(self.__rfc, self.__contrasena)
-        self.__resultado = portalCfdi.consultar(directorioAGuardar, filtros)
+    def __peticion_portal_cfdi(self, directorio_guardar, filtros):
+        portal_cfdi = PortalCfdi(self.__rfc, self.__contrasena)
+        self.__resultado = portal_cfdi.consultar(directorio_guardar, filtros)
         if not self.__resultado:
-            self.__mensajeError = portalCfdi.obtieneMensajeError()
+            self.__mensaje_error = portal_cfdi.error()
         else:
-            self.__listaDocumentosDescargados = portalCfdi.obtieneListaDocumentosDescargados()
+            self.__lista_documentos_descargados = portal_cfdi.\
+                lista_cfdis()
         return self.__resultado
 
-    def obtieneListaDocumentosDescargados(self):
-        return self.__listaDocumentosDescargados
+    def lista_cfdis(self):
+        return self.__lista_documentos_descargados
 
-    def obtieneMensajeError(self):
-        return self.__mensajeError
+    def error(self):
+        return self.__mensaje_error
 
-    def descargarPorAnnioMesYDia(self, directorioAGuardar, annio, mes, dia):
+    def descargar_fecha(self, directorio_guardar, annio, mes, dia):
         filtros = FiltrosRecibidos()
         filtros.annio = annio
         filtros.mes = mes
         filtros.dia = dia
-        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
 
-    def descargarPorAnnioYMes(self, directorioAGuardar, annio, mes):
-        filtros=FiltrosRecibidos()
-        filtros.annio=annio
-        filtros.mes=mes
-        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
-
-    def descargarPorFolioFiscal(self, directorioAGuardar, folioFiscal):
+    def descargar_anniomes(self, directorio_guardar, annio, mes):
         filtros = FiltrosRecibidos()
-        filtros.folioFiscal = folioFiscal
-        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
+        filtros.annio = annio
+        filtros.mes = mes
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
 
-    def descargarPorFiltros(self, directorioAGuardar, filtros):
-        return self.__peticionPortalCfdi(directorioAGuardar, filtros)
+    def descargar_folio(self, directorio_guardar, folio_fiscal):
+        filtros = FiltrosRecibidos()
+        filtros.folio_fiscal = folio_fiscal
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
+
+    def descargar(self, directorio_guardar, filtros):
+        return self.__peticion_portal_cfdi(directorio_guardar, filtros)
