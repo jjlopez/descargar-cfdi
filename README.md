@@ -134,10 +134,10 @@ filtros = FiltrosRecibidos()
 filtros.annio = '2015'
 filtros.mes = '3'
 filtros.dia = '14'
-filtros.rfcEmisor = 'xxxxxxxxxxxxx'
+filtros.rfc_emisor = 'xxxxxxxxxxxxx'
 
 if servicio.descargar('/home/usuario/xml/', filtros):
-    descargados = servicio.lista_cfdiss()
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
 else:
     print("Ha ocurrido el siguiente error: " + servicio.error())
@@ -153,7 +153,7 @@ servicio = ServicioCfdi('RFC', 'Contrasena')
 filtros = FiltrosRecibidos()
 filtros.annio = '2015'
 filtros.mes = '2'
-filtros.rfcEmisor = 'xxxxxxxxxxxxx'
+filtros.rfc_emisor = 'xxxxxxxxxxxxx'
 
 if servicio.descargar('/home/usuario/xml/', filtros):
     descargados = servicio.lista_cfdis()
@@ -210,15 +210,15 @@ else:
 * annio
 * mes
 * dia
-* horaInicial
-* minutoInicial
-* segundoInicial
-* horaFinal
-* minutoFinal
-* segundoFinal
-* rfcEmisor
+* hora_inicial
+* minuto_inicial
+* segundo_inicial
+* hora_final
+* minuto_final
+* segundo_final
+* rfc_emisor
 * tipo
-* folioFiscal
+* folio_fiscal
 
 #Tipos
 * 8=Estándar (sin complemento)
