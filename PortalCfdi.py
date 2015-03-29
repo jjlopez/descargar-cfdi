@@ -6,162 +6,187 @@ from ParserFormatSAT import ParserFormatSAT
 from Header import Header
 from Utilerias import Utilerias
 
+
 class PortalCfdi:
+
     def __init__(self, rfc, contrasena):
         self.__rfc = rfc
         self.__contrasena = contrasena
         self.__sesion = requests.Session()
-        self.__directorioAGuardar=''
+        self.__directorio_guardar = ''
         self.__header = Header()
-        self.__hostCfdiau = 'cfdiau.sat.gob.mx'
-        self.__hostPortalCfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
-        self.__urlCfdiau = 'https://' + self.__hostCfdiau + '/'
-        self.__urlPortalCfdi = 'https://' + self.__hostPortalCfdi + '/'
-        self.__urlCfdiCont='https://cfdicontribuyentes.accesscontrol.windows.net/'
+        self.__host_cfdiau = 'cfdiau.sat.gob.mx'
+        self.__host_portal_cfdi = 'portalcfdi.facturaelectronica.sat.gob.mx'
+        self.__url_cfdiau = 'https://' + self.__host_cfdiau + '/'
+        self.__url_portal_cfdi = 'https://' + self.__host_portal_cfdi + '/'
+        self.__url_cfdi_cont = ('https://cfdicontribuyentes.accesscontrol.'
+                                'windows.net/')
         self.__error = ''
-        self.__listaDocumentos = []
+        self.__lista_documentos = []
 
-    def __entrarAlaPaginaInicio(self):
-        url = self.__urlCfdiau + '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
+    def __entrar_pagina_inicio(self):
+        url = self.__url_cfdiau + \
+            '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         self.__sesion.post(url)
 
-    def __enviarFormularioConCIEC(self):
-        url = self.__urlCfdiau + 'nidp/app/login?sid=0&sid=0'
+    def __enviar_formulario_ciec(self):
+        url = self.__url_cfdiau + 'nidp/app/login?sid=0&sid=0'
         encabezados = self.__header.obtener(
-            self.__hostCfdiau,
-            self.__urlCfdiau +
+            self.__host_cfdiau,
+            self.__url_cfdiau +
             '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         )
-        valoresPost = {
-            'option':'credential',
-            'Ecom_User_ID':self.__rfc,
-            'Ecom_Password':self.__contrasena,
-            'submit':'Enviar'
+        valores_post = {
+            'option': 'credential',
+            'Ecom_User_ID': self.__rfc,
+            'Ecom_Password': self.__contrasena,
+            'submit': 'Enviar'
         }
-        self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        self.__sesion.post(url, data=valores_post, headers=encabezados)
 
-    def __leerFormulario(self, html):
-        htmlFormulario = HTMLForm(html, 'form')
-        inputValores = htmlFormulario.getFormValues()
-        return inputValores
+    def __leer_formulario(self, html):
+        html_formulario = HTMLForm(html, 'form')
+        input_valores = html_formulario.get_form_values()
+        return input_valores
 
-    def __leerFormularioDeRespuesta(self):
-        url = self.__urlPortalCfdi
+    def __leer_formulario_respuesta(self):
+        url = self.__url_portal_cfdi
         respuesta = self.__sesion.get(url)
-        htmlRespuesta = respuesta.text
-        return self.__leerFormulario(htmlRespuesta)
+        html_respuesta = respuesta.text
+        return self.__leer_formulario(html_respuesta)
 
-    def __leerFormularioDeAccessControl(self, valoresPost):
-        url = self.__urlCfdiCont + 'v2/wsfederation'
-        respuesta = self.__sesion.post(url, data=valoresPost)
-        htmlRespuesta = respuesta.text
-        return self.__leerFormulario(htmlRespuesta)
+    def __leer_formulario_access_control(self, valores_post):
+        url = self.__url_cfdi_cont + 'v2/wsfederation'
+        respuesta = self.__sesion.post(url, data=valores_post)
+        html_respuesta = respuesta.text
+        return self.__leer_formulario(html_respuesta)
 
-    def __entrarAPantallaInicioSistema(self, valoresPost):
-        url = self.__urlPortalCfdi
-        respuesta = self.__sesion.post(url, data=valoresPost)
-        htmlRespuesta = respuesta.text
-        return htmlRespuesta
+    def __entrar_pantalla_inicio_sistema(self, valores_post):
+        url = self.__url_portal_cfdi
+        respuesta = self.__sesion.post(url, data=valores_post)
+        html_respuesta = respuesta.text
+        return html_respuesta
 
-    def __obtenerValoresPostDelTipoDeBusqueda(self, htmlFuente):
-        inputValores = self.__leerFormulario(htmlFuente)
-        inputValores['ctl00$MainContent$TipoBusqueda'] = 'RdoTipoBusquedaReceptor'
-        inputValores['__ASYNCPOST'] = 'true'
-        inputValores['__EVENTTARGET'] = ''
-        inputValores['__EVENTARGUMENT'] = ''
-        inputValores['ctl00$ScriptManager1'] = 'ctl00$MainContent$UpnlBusqueda|ctl00$MainContent$BtnBusqueda'
-        return inputValores
+    def __obtener_valores_post_tipo_busqueda(self, html_fuente):
+        tipo_busqueda = 'RdoTipoBusquedaReceptor'
+        input_valores = self.__leer_formulario(html_fuente)
+        input_valores['ctl00$MainContent$TipoBusqueda'] = tipo_busqueda
+        input_valores['__ASYNCPOST'] = 'true'
+        input_valores['__EVENTTARGET'] = ''
+        input_valores['__EVENTARGUMENT'] = ''
+        input_valores['ctl00$ScriptManager1'] = ('ctl00$MainContent$'
+                                                 'UpnlBusqueda|'
+                                                 'ctl00$MainContent$'
+                                                 'BtnBusqueda')
+        return input_valores
 
-
-    def __seleccionarTipo(self, htmlFuente):
-        url = self.__urlPortalCfdi + 'Consulta.aspx'
-        post = self.__obtenerValoresPostDelTipoDeBusqueda(htmlFuente)
+    def __seleccionar_tipo(self, html_fuente):
+        url = self.__url_portal_cfdi + 'Consulta.aspx'
+        post = self.__obtener_valores_post_tipo_busqueda(html_fuente)
         encabezados = self.__header.obtener(
-            self.__hostCfdiau,
-            self.__urlPortalCfdi
+            self.__host_cfdiau,
+            self.__url_portal_cfdi
         )
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
         return respuesta.text
 
-    def __logueoDeUsuarioConCIEC(self):
-        self.__entrarAlaPaginaInicio()
-        self.__enviarFormularioConCIEC()
-        valoresPost = self.__leerFormularioDeRespuesta()
-        valoresPostAccessControl = self.__leerFormularioDeAccessControl(valoresPost)
-        html = self.__entrarAPantallaInicioSistema(valoresPostAccessControl)
-        self.__seleccionarTipo(html)
+    def __logueo_usuario_ciec(self):
+        self.__entrar_pagina_inicio()
+        self.__enviar_formulario_ciec()
+        valores_post = self.__leer_formulario_respuesta()
 
-    def __entrarConsultaReceptor(self, filtros):
-        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        valores_post_access_ctrl = self.\
+            __leer_formulario_access_control(valores_post)
+
+        html = self.__entrar_pantalla_inicio_sistema(valores_post_access_ctrl)
+        self.__seleccionar_tipo(html)
+
+    def __entra_consulta_receptor(self, filtros):
+        url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
-        htmlRespuesta = respuesta.text
-        inputValores = self.__leerFormulario(htmlRespuesta)
+        html_respuesta = respuesta.text
+        input_valores = self.__leer_formulario(html_respuesta)
         util = Utilerias()
-        post = util.mergeListas(inputValores, filtros.obtenerPOSTFormularioFechas())
-        encabezados = self.__header.obtenerAJAX(
-            self.__hostPortalCfdi,
-            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        post = util.\
+            mezcla_listas(
+                input_valores,
+                filtros.obtener_post_formulario_fechas()
+            )
+        encabezados = self.__header.obtener_ajax(
+            self.__host_portal_cfdi,
+            self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
         respuesta = self.__sesion.post(url, data=post, headers=encabezados)
-        return respuesta.text, inputValores
+        return respuesta.text, input_valores
 
-    def __obtenerValoresPostBusquedaFechas(self, htmlFuente, inputValores, filtros):
-        parser = ParserFormatSAT(htmlFuente)
-        valoresCambioEstado = parser.obtenerValoresFormulario()
+    def __obtener_valores_post_busqueda_fechas(self, html, inputs, filtros):
+        parser = ParserFormatSAT(html)
+        valores_cambio_estado = parser.obtener_valores_formulario()
         util = Utilerias()
-        temporal = util.mergeListas(inputValores, filtros.obtenerPOST())
-        return util.mergeListas(temporal, valoresCambioEstado)
- 
-    def __consultaReceptorFecha(self, filtros):
-        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
-        htmlRespuesta, inputValores = self.__entrarConsultaReceptor(filtros)
-        valoresPost = self.__obtenerValoresPostBusquedaFechas(
-            htmlRespuesta,
-            inputValores,
+        temporal = util.mezcla_listas(inputs, filtros.obtener_post())
+        return util.mezcla_listas(temporal, valores_cambio_estado)
+
+    def __consulta_receptor_fecha(self, filtros):
+        url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
+        html_respuesta, input_valores = self.__entra_consulta_receptor(filtros)
+        valores_post = self.__obtener_valores_post_busqueda_fechas(
+            html_respuesta,
+            input_valores,
             filtros
         )
-        encabezados = self.__header.obtenerAJAX(
-            self.__hostPortalCfdi,
-            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        encabezados = self.__header.obtener_ajax(
+            self.__host_portal_cfdi,
+            self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
-        respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        respuesta = self.__sesion.post(
+            url,
+            data=valores_post,
+            headers=encabezados
+        )
         return respuesta.text
 
-    def __consultaReceptorFolio(self, filtros):
-        url = self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+    def __consulta_receptor_folio(self, fltrs):
+        url = self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         respuesta = self.__sesion.get(url)
-        htmlRespuesta = respuesta.text
-        inputValores = self.__leerFormulario(htmlRespuesta)
+        html_respuesta = respuesta.text
+        input_valores = self.__leer_formulario(html_respuesta)
         util = Utilerias()
-        valoresPost = util.mergeListas(inputValores, filtros.obtenerPOST())
+        valores_post = util.mezcla_listas(input_valores, fltrs.obtener_post())
 
-        encabezados = self.__header.obtenerAJAX(
-            self.__hostPortalCfdi,
-            self.__urlPortalCfdi + 'ConsultaReceptor.aspx'
+        encabezados = self.__header.obtener_ajax(
+            self.__host_portal_cfdi,
+            self.__url_portal_cfdi + 'ConsultaReceptor.aspx'
         )
-        respuesta=self.__sesion.post(url, data=valoresPost, headers=encabezados)
+        respuesta = self.__sesion.post(
+            url,
+            data=valores_post,
+            headers=encabezados
+        )
         return respuesta.text
 
-
-    def obtieneMensajeError(self):
+    def error(self):
         return self.__error
 
-    def obtieneListaDocumentosDescargados(self):
-        return self.__listaDocumentos
+    def lista_cfdis(self):
+        return self.__lista_documentos
 
-    def consultar(self, directorioAGuardar, filtros):
+    def consultar(self, directorio_guardar, filtros):
         try:
-            self.__logueoDeUsuarioConCIEC()
-            if filtros.folioFiscal != '':
-                htmlRespuesta=self.__consultaReceptorFolio(filtros)
-                nombre = filtros.folioFiscal
+            self.__logueo_usuario_ciec()
+            if filtros.folio_fiscal != '':
+                html_respuesta = self.__consulta_receptor_folio(filtros)
+                nombre = filtros.folio_fiscal
             else:
-                htmlRespuesta=self.__consultaReceptorFecha(filtros)
+                html_respuesta = self.__consulta_receptor_fecha(filtros)
                 nombre = ''
 
-            xml=DescargarXML(self.__sesion, htmlRespuesta, directorioAGuardar)
-            xml.obtenerEnlacesYDescargar(nombre)
-            self.__listaDocumentos = xml.obtenerListaDeDocumentosDescargados()
+            xml = DescargarXML(
+                self.__sesion,
+                html_respuesta,
+                directorio_guardar
+            )
+            xml.obtener_enlaces_descargar(nombre)
+            self.__lista_documentos = xml.get_lista_documentos_descargados()
             return True
         except:
             error = traceback.format_exc()

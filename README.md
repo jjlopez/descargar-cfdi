@@ -1,15 +1,15 @@
 # Métodos de la clase ServicioCfdi
-* descargarPorAnnioYMes
-* descargarPorAnnioMesYDia
-* descargarPorFolioFiscal
-* descargarPorFiltros
+* descargar_anniomes
+* descargar_fecha
+* descargar_folio
+* descargar
 
-## descargarPorAnnioYMes
+## descargar_anniomes
 Filtra por año y mes para despues almacenar los xml encontrados en el directorio 
 que recibe como parámetro.
 
 ```python
-descargarPorAnnioYMes(directorio, año, mes)
+descargar_anniomes(directorio, año, mes)
 ```
 
 * directorio: Indica donde se almacenarán los xml encontrados, es necesario que 
@@ -29,26 +29,26 @@ directorio ya exista y termine con / .
     * 11=Noviembre
     * 12=Diciembre
 
-#### Ejemplo de uso método descargarPorAnnioYMes
+#### Ejemplo de uso método descargar_anniomes
 
 ```python
 from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Descargar al directorio /home/usuario/xml los xml del mes 03/2015
-if not servicio.descargarPorAnnioYMes('/home/usuario/xml/', '2015', '3'):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+# Descargar al directorio /home/usuario/xml los xml del mes 03/2015
+if servicio.descargar_anniomes('/home/usuario/xml/', '2015', '3'):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 
 ```
-## descargarPorAnnioMesYDia
+## descargar_fecha
 Filtra por año, mes y dia para despues almacenar los xml encontrados en el directorio 
 que recibe como parámetro.
 
 ```python
-descargarPorAnnioMesYDia(directorio, año, mes, dia)
+descargar_fecha(directorio, año, mes, dia)
 ```
 
 * directorio: Indica donde se almacenarán los xml encontrados, es necesario que 
@@ -69,58 +69,58 @@ directorio ya exista y termine con / .
     * 12=Diciembre
 * dia: Dia a buscar.
 
-#### Ejemplo de uso método descargarPorAnnioMesYDia
+#### Ejemplo de uso método descargar_fecha
 
 ```python
 from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Descargar al directorio /home/usuario/xml los xml de la fecha 14/03/2015
-if not servicio.descargarPorAnnioMesYDia('/home/usuario/xml/', '2015', '3', '14'):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+# Descargar al directorio /home/usuario/xml los xml de la fecha 14/03/2015
+if servicio.descargar_fecha('/home/usuario/xml/', '2015', '3', '14'):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 
 ```
-## descargarPorFolioFiscal
+## descargar_folio
 Filtra por folio fiscal para despues almacenar el xml encontrado en el directorio 
 que recibe como parámetro.
 
 ```python
-descargarPorFolioFiscal(directorio, folioFiscal)
+descargar_folio(directorio, folioFiscal)
 ```
 
 * directorio: Indica donde se almacenarán los xml encontrados, es necesario que 
 directorio ya exista y termine con / .
 folioFiscal: UUID a buscar
 
-#### Ejemplo de uso descargarPorFolioFiscal
+#### Ejemplo de uso descargar_folio
 
 ```python
 from ServicioCfdi import ServicioCfdi
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Descargar al directorio /home/usuario/xml el xml del UUID
-if not servicio.descargarPorFolioFiscal('/home/usuario/xml/', 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX'):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+# Descargar al directorio /home/usuario/xml el xml del UUID
+if servicio.descargar_folio('/home/usuario/xml/', 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX'):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 ```
-## descargarPorFiltros
+## descargar
 Filtra por los datos establecidos para despues almacenar los xml encontrados en el directorio 
 que recibe como parámetro.
 
 ```python
-descargarPorFiltros(directorio, filtros)
+descargar(directorio, filtros)
 ```
 
 * directorio: Indica donde se almacenarán los xml encontrados, es necesario que 
 directorio ya exista y termine con / .
 filtros: Filtros personalizados
 
-#### Ejemplo de uso descargarPorFiltros
+#### Ejemplo de uso descargar
 
 * Descargar los xml del emisor xxxxxxxxxxxxx con fecha del 14/03/2015
 
@@ -129,18 +129,18 @@ from ServicioCfdi import ServicioCfdi
 from FiltrosRecibidos import FiltrosRecibidos
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Definir filtros personalizados
+# Definir filtros personalizados
 filtros = FiltrosRecibidos()
-filtros.annio='2015'
-filtros.mes='3'
-filtros.dia='14'
-filtros.rfcEmisor='xxxxxxxxxxxxx'
+filtros.annio = '2015'
+filtros.mes = '3'
+filtros.dia = '14'
+filtros.rfc_emisor = 'xxxxxxxxxxxxx'
 
-if not servicio.descargarPorFiltros('/home/usuario/xml/', filtros):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+if servicio.descargar('/home/usuario/xml/', filtros):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 ```
 * Descargar los xml del emisor xxxxxxxxxxxxx del mes de febrero
 
@@ -149,17 +149,17 @@ from ServicioCfdi import ServicioCfdi
 from FiltrosRecibidos import FiltrosRecibidos
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Definir filtros personalizados
+# Definir filtros personalizados
 filtros = FiltrosRecibidos()
-filtros.annio='2015'
-filtros.mes='2'
-filtros.rfcEmisor='xxxxxxxxxxxxx'
+filtros.annio = '2015'
+filtros.mes = '2'
+filtros.rfc_emisor = 'xxxxxxxxxxxxx'
 
-if not servicio.descargarPorFiltros('/home/usuario/xml/', filtros):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+if servicio.descargar('/home/usuario/xml/', filtros):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 ```
 * Descargar los xml del día 16/02/2015 que tengan la hora de creación entre las
 15:10:07 y las 22:14:10 horas
@@ -169,23 +169,23 @@ from ServicioCfdi import ServicioCfdi
 from FiltrosRecibidos import FiltrosRecibidos
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Definir filtros personalizados
-filtros=FiltrosRecibidos()
-filtros.annio='2015'
-filtros.mes='2'
-filtros.dia='16'
-filtros.horaInicial='15'
-filtros.minutoInicial='10'
+# Definir filtros personalizados
+filtros = FiltrosRecibidos()
+filtros.annio = '2015'
+filtros.mes = '2'
+filtros.dia = '16'
+filtros.horaInicial = '15'
+filtros.minutoInicial = '10'
 filtros.segundoInicial='7'
-filtros.horaFinal='22'
-filtros.minutoFinal='14'
-filtros.segundoFinal='10'
+filtros.horaFinal = '22'
+filtros.minutoFinal = '14'
+filtros.segundoFinal = '10'
 
-if not servicio.descargarPorFiltros('/home/usuario/xml/', filtros):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+if servicio.descargar('/home/usuario/xml/', filtros):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 ```
 * Descargar los xml del mes de enero del 2015 que sean del tipo "Vales de Despensa"
 
@@ -194,31 +194,31 @@ from ServicioCfdi import ServicioCfdi
 from FiltrosRecibidos import FiltrosRecibidos
 
 servicio = ServicioCfdi('RFC', 'Contrasena')
-#Definir filtros personalizados
-filtros=FiltrosRecibidos()
-filtros.annio='2015'
-filtros.mes='1'
-filtros.tipo='33554432'
+# Definir filtros personalizados
+filtros = FiltrosRecibidos()
+filtros.annio = '2015'
+filtros.mes = '1'
+filtros.tipo = '33554432'
 
-if not servicio.descargarPorFiltros('/home/usuario/xml/', filtros):
-    print("Ha ocurrido el siguiente error: " + servicio.obtieneMensajeError())
-else:
-    descargados = servicio.obtieneListaDocumentosDescargados()
+if servicio.descargar('/home/usuario/xml/', filtros):
+    descargados = servicio.lista_cfdis()
     print("XML Descargados: " + str(len(descargados)))
+else:
+    print("Ha ocurrido el siguiente error: " + servicio.error())
 ```
 #FiltrosRecibidos
 * annio
 * mes
 * dia
-* horaInicial
-* minutoInicial
-* segundoInicial
-* horaFinal
-* minutoFinal
-* segundoFinal
-* rfcEmisor
+* hora_inicial
+* minuto_inicial
+* segundo_inicial
+* hora_final
+* minuto_final
+* segundo_final
+* rfc_emisor
 * tipo
-* folioFiscal
+* folio_fiscal
 
 #Tipos
 * 8=Estándar (sin complemento)
