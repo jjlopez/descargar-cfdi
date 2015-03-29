@@ -26,7 +26,7 @@ class PortalCfdi:
 
     def __entrar_pagina_inicio(self):
         url = self.__url_cfdiau + \
-               '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
+            '/nidp/app/login?id=SATUPCFDiCon&sid=0&option=credential&sid=0'
         self.__sesion.post(url)
 
     def __enviar_formulario_ciec(self):
